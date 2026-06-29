@@ -12,12 +12,14 @@ const translations = {
         demo_title: "Interaktywne Demo",
         placeholder_title: "Demo wkrótce",
         placeholder_desc: "W tym miejscu pojawi się pełna wersja demo gry wprost z silnika Godot. Zapraszamy do śledzenia aktualizacji na Discordzie!",
+        placeholder_title_mobile: "Demo dostępne na komputerach",
+        placeholder_desc_mobile: "Interaktywne demo gry jest zoptymalizowane pod komputery stacjonarne. Odwiedź nas na desktopie, aby zagrać!",
         placeholder_btn: "Wczytaj Demo",
         mechanics_title: "Mechaniki Kwantowe",
         mech1_title: "Stukaj i Tnij",
         mech1_desc: "Zarządzaj chaosem poprzez precyzyjne interakcje z cząstkami.",
         mech2_title: "Kwanciaki",
-        mech2_desc: "Twoi kwantowi towarzysze. Ewoluują i walczą u Twojego boku.",
+        mech2_desc: "Twoi kwantowi towarzysze. Ulepszaj ich i korzystaj z ich wsparcia podczas rozgrywki.",
         mech3_title: "Rdzenie Kwantowe",
         mech3_desc: "Rozbijaj tajemnicze rdzenie i dekoduj rzadkie nagrody.",
         screenshots_title: "Galeria",
@@ -48,12 +50,14 @@ const translations = {
         demo_title: "Interactive Demo",
         placeholder_title: "Demo coming soon",
         placeholder_desc: "The full web version of the game exported from Godot will be loaded here. Stay tuned for updates on our Discord!",
+        placeholder_title_mobile: "Demo available on desktop",
+        placeholder_desc_mobile: "The interactive demo is optimized for desktop computers. Please visit us on a desktop to play!",
         placeholder_btn: "Load Demo",
         mechanics_title: "Quantum Mechanics",
         mech1_title: "Tap & Slice",
         mech1_desc: "Manage chaos through precise interactions with quantum particles.",
-        mech2_title: "Companions",
-        mech2_desc: "Your quantum allies. They evolve and fight by your side.",
+        mech2_title: "Quantaks",
+        mech2_desc: "Your quantum companions. Upgrade them and use their support during gameplay.",
         mech3_title: "Quantum Cores",
         mech3_desc: "Crack mysterious cores and decode rare rewards.",
         screenshots_title: "Screenshots",
@@ -75,6 +79,7 @@ const translations = {
 };
 
 let currentLanguage = 'pl';
+const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
 
 // ===================== LOCALIZATION HANDLER =====================
 function setLanguage(lang) {
@@ -87,7 +92,18 @@ function setLanguage(lang) {
 
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (translations[lang][key]) el.innerHTML = translations[lang][key];
+        let translationText = translations[lang][key];
+        
+        if (isMobileDevice) {
+            if (key === 'placeholder_title' && translations[lang]['placeholder_title_mobile']) {
+                translationText = translations[lang]['placeholder_title_mobile'];
+            }
+            if (key === 'placeholder_desc' && translations[lang]['placeholder_desc_mobile']) {
+                translationText = translations[lang]['placeholder_desc_mobile'];
+            }
+        }
+        
+        if (translationText) el.innerHTML = translationText;
     });
 
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
@@ -280,44 +296,44 @@ const particleData = {
     pl: [
         {
             badge: "KWARK (STUKNIJ)",
-            desc: "Dotykaj cyjanowe cząstki elementarne, aby zdobywać punkty.",
+            desc: "Stukaj w cyjanowe cząstki, aby zdobywać punkty.",
             class: "quark"
         },
         {
             badge: "MEZON (PRZETNIJ)",
-            desc: "Przecinaj magentowe mezony szybkim ruchem kursora.",
+            desc: "Przecinaj magentowe mezony szybkim cięciem.",
             class: "meson"
         },
         {
             badge: "SPLĄTANE (UNIK/CIĘCIE)",
-            desc: "Przecinaj linię łączącą tylko wtedy, gdy jest czerwona!",
+            desc: "Przecinaj linię łączącą/cząstkę tylko wtedy, gdy jest magentowa! Lub stukaj w cyjanowe cząstki",
             class: "entangled"
         },
         {
             badge: "ANTYMATERIA (UNIKAJ)",
-            desc: "Unikaj za wszelką cenę. Zwiększa chaos o 25!",
+            desc: "Unikaj za wszelką cenę. Każde dotknięcie lub cięcie drastycznie zwiększa poziom chaosu!",
             class: "antimatter"
         }
     ],
     en: [
         {
             badge: "QUARK (TAP)",
-            desc: "Tap cyan elementary particles to score points.",
+            desc: "Tap cyan particles to score points.",
             class: "quark"
         },
         {
             badge: "MESON (SLICE)",
-            desc: "Slice magenta mesons with a quick swipe.",
+            desc: "Slice magenta mesons with a quick cut.",
             class: "meson"
         },
         {
             badge: "ENTANGLED (AVOID/SLICE)",
-            desc: "Slice the connecting line only when it turns red.",
+            desc: "Slice the connecting line/particle only when it is magenta! Or tap cyan particles",
             class: "entangled"
         },
         {
             badge: "ANTIMATTER (AVOID)",
-            desc: "Avoid at all costs. Increases chaos by 25.",
+            desc: "Avoid at all costs. Any touch or slice drastically increases the chaos level!",
             class: "antimatter"
         }
     ]
@@ -606,6 +622,94 @@ if (contactLink) {
             showContactTooltip(contactLink);
         }).catch(() => {
             window.location.href = `mailto:${email}`;
+        });
+    });
+}
+
+// ===================== NEWSLETTER AJAX SUBMISSION =====================
+const newsletterForm = document.querySelector('.newsletter-form');
+if (newsletterForm) {
+    newsletterForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const form = e.target;
+        const submitBtn = form.querySelector('.btn-submit');
+        const originalBtnText = submitBtn.innerHTML;
+        
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = currentLanguage === 'pl' ? 'Wysyłanie...' : 'Sending...';
+        
+        const formData = new FormData(form);
+        
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                const container = form.parentElement;
+                const isPl = currentLanguage === 'pl';
+                
+                form.style.transition = 'opacity 0.3s ease';
+                form.style.opacity = '0';
+                
+                setTimeout(() => {
+                    form.style.display = 'none';
+                    
+                    const successMessage = document.createElement('div');
+                    successMessage.className = 'newsletter-success-msg';
+                    successMessage.style.cssText = `
+                        padding: 1.5rem;
+                        background: rgba(0, 236, 246, 0.05);
+                        border: 1px solid var(--color-cyan);
+                        border-radius: 12px;
+                        text-align: center;
+                        box-shadow: 0 0 15px var(--color-cyan-glow);
+                        opacity: 0;
+                        transition: opacity 0.3s ease;
+                    `;
+                    
+                    const title = document.createElement('h4');
+                    title.style.cssText = `
+                        font-family: var(--font-accent);
+                        color: var(--color-cyan);
+                        font-size: 1.25rem;
+                        margin-bottom: 0.5rem;
+                        text-transform: uppercase;
+                    `;
+                    title.textContent = isPl ? 'Dziękujemy, Obserwatorze!' : 'Thank you, Observer!';
+                    
+                    const text = document.createElement('p');
+                    text.style.cssText = `
+                        color: #b0b5c6;
+                        font-size: 0.95rem;
+                        margin: 0;
+                    `;
+                    text.textContent = isPl 
+                        ? 'Twój e-mail został pomyślnie zapisany do bazy kwantowej. Otrzymasz powiadomienie o premierze!' 
+                        : 'Your email has been successfully registered. We will notify you when the game launches!';
+                    
+                    successMessage.appendChild(title);
+                    successMessage.appendChild(text);
+                    container.appendChild(successMessage);
+                    
+                    void successMessage.offsetWidth;
+                    successMessage.style.opacity = '1';
+                }, 300);
+            } else {
+                throw new Error('Network response was not ok.');
+            }
+        })
+        .catch(error => {
+            console.error('Newsletter error:', error);
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
+            alert(currentLanguage === 'pl' 
+                ? 'Coś poszło nie tak. Spróbuj ponownie później.' 
+                : 'Something went wrong. Please try again later.');
         });
     });
 }
