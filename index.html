@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Chaos — Gra Mobilna</title>
+    <meta name="description" content="Quantum Chaos — zręcznościowa gra mobilna osadzona w mrocznym kwantowym uniwersum. Zagraj w demo w przeglądarce.">
+    <link rel="icon" type="image/png" href="Assets/Icon_192x192.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="starsCanvas"></canvas>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-container">
+            <a href="#" class="logo-link">
+                <img src="Assets/QuantumTitle.png" alt="Quantum Chaos Logo" class="nav-logo">
+            </a>
+            <nav class="main-nav">
+                <a href="#mechanics" data-i18n="nav_mechanics">Mechaniki</a>
+                <a href="#screenshots" data-i18n="nav_screenshots">Galeria</a>
+                <a href="#demo" data-i18n="nav_demo">Zagraj w Demo</a>
+                <a href="#community" data-i18n="nav_community">Społeczność</a>
+            </nav>
+            <div class="lang-switch">
+                <button id="lang-pl" class="lang-btn active">PL</button>
+                <button id="lang-en" class="lang-btn">EN</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- ==================== HERO SECTION ==================== -->
+        <section class="hero-section">
+            <div class="hero-logo-centered">
+                <img src="Assets/QuantumTitle.png" alt="Quantum Chaos Logo" class="hero-logo">
+            </div>
+            <div class="hero-container-split">
+                <!-- Left Side: Texts & CTAs -->
+                <div class="hero-text-side">
+                    <h1 class="hero-tagline" data-i18n="hero_tagline">Stuknij. Przetnij. Przetrwaj kwantową burzę.</h1>
+                    <p class="hero-description" data-i18n="hero_desc">Rzeczywistość jest niestabilna. Coś czai się za kwantową zasłoną. Opanuj cząstki, zmierz się z anomaliami i odkryj prawdę — jeśli przetrwasz wystarczająco długo.</p>
+                    <div class="hero-cta-container">
+                        <a href="#demo" class="btn btn-primary" data-i18n="cta_play">Zagraj w Demo</a>
+                        <a href="#community" class="btn btn-secondary" data-i18n="cta_discord">Dołącz na Discord</a>
+                    </div>
+                </div>
+
+                <!-- Right Side: Interactive QUINN -->
+                <div class="hero-quinn-side">
+                    <div class="quinn-bubble" id="quinn-bubble">
+                        <p id="quinn-bubble-text">Witaj, Obserwatorze. Gotowy na pomiar?</p>
+                    </div>
+                    <div class="quinn-character-wrapper">
+                        <div class="quinn-character" id="quinn-character-interactive">
+                            <img src="Assets/Quinn_back_ring.png" alt="" class="quinn-ring quinn-ring-back-1">
+                            <img src="Assets/Quinn_back_ring_2.png" alt="" class="quinn-ring quinn-ring-back-2">
+                            <img src="Assets/QUINN.png" alt="QUINN" class="quinn-body">
+                            <img src="Assets/Quinn_front_ring.png" alt="" class="quinn-ring quinn-ring-front-1">
+                            <img src="Assets/Quinn_front_ring_2.png" alt="" class="quinn-ring quinn-ring-front-2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MECHANICS SECTION ==================== -->
+        <section id="mechanics" class="mechanics-section">
+            <div class="section-container">
+                <h2 class="section-title" data-i18n="mechanics_title">Mechaniki Kwantowe</h2>
+                <div class="mechanics-grid">
+                    <!-- Card 1: Tap & Slice (DYNAMIC) -->
+                    <div class="mechanic-card">
+                        <div class="card-glow cyan"></div>
+                        <div class="card-visual">
+                            <div class="particle-showcase-box">
+                                <div class="particle-view">
+                                    <div class="particle-line" id="dynamic-particle-line" style="display: none;"></div>
+                                    <div class="particle-visual-element partner" id="dynamic-particle-partner" style="display: none;"></div>
+                                    <div class="particle-visual-element" id="dynamic-particle"></div>
+                                </div>
+                                <div class="particle-badge" id="particle-badge-text">KWARK (TAP)</div>
+                            </div>
+                        </div>
+                        <h3 data-i18n="mech1_title">Stukaj i Tnij</h3>
+                        <p class="card-desc" id="particle-desc-text" data-i18n="mech1_desc">Zbieraj kwarki, tnij mezony, unikaj antymaterii.</p>
+                    </div>
+
+                    <!-- Card 2: Kwanciaki -->
+                    <div class="mechanic-card">
+                        <div class="card-glow magenta"></div>
+                        <div class="card-visual">
+                            <img src="Assets/Shrondi_front_128.png" alt="Kwanciak Schrondi" class="card-screenshot">
+                        </div>
+                        <h3 data-i18n="mech2_title">Kwanciaki</h3>
+                        <p class="card-desc" data-i18n="mech2_desc">Twoi kwantowi towarzysze. Ewoluują i walczą u Twojego boku.</p>
+                    </div>
+
+                    <!-- Card 3: Rdzenie -->
+                    <div class="mechanic-card">
+                        <div class="card-glow gold"></div>
+                        <div class="card-visual">
+                            <img src="Assets/Core_Standard/QuantumCore_Standard_With_Eyes.png" alt="Rdzeń Kwantowy" class="card-screenshot">
+                        </div>
+                        <h3 data-i18n="mech3_title">Rdzenie Kwantowe</h3>
+                        <p class="card-desc" data-i18n="mech3_desc">Rozbijaj tajemnicze rdzenie i dekoduj rzadkie nagrody.</p>
+                    </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== SCREENSHOTS SECTION ==================== -->
+            <section id="screenshots" class="screenshots-section">
+                <div class="section-container">
+                    <h2 class="section-title" data-i18n="screenshots_title">Galeria</h2>
+                    <div class="carousel-container-outer">
+                        <button class="carousel-control prev" onclick="moveCarousel(-1)">&#10094;</button>
+                        <div class="screenshot-carousel">
+                            <div class="carousel-track" id="carousel-track">
+                                <div class="screenshot-item" onclick="openLightbox(0)">
+                                    <img src="Assets/Screenshots/1.png" alt="Quantum Chaos Gameplay 1" class="screenshot-img" loading="lazy">
+                                    <div class="screenshot-overlay"><span class="zoom-icon">🔍</span></div>
+                                </div>
+                                <div class="screenshot-item" onclick="openLightbox(1)">
+                                    <img src="Assets/Screenshots/2.png" alt="Quantum Chaos Gameplay 2" class="screenshot-img" loading="lazy">
+                                    <div class="screenshot-overlay"><span class="zoom-icon">🔍</span></div>
+                                </div>
+                                <div class="screenshot-item" onclick="openLightbox(2)">
+                                    <img src="Assets/Screenshots/3.png" alt="Quantum Chaos Gameplay 3" class="screenshot-img" loading="lazy">
+                                    <div class="screenshot-overlay"><span class="zoom-icon">🔍</span></div>
+                                </div>
+                                <div class="screenshot-item" onclick="openLightbox(3)">
+                                    <img src="Assets/Screenshots/4.png" alt="Quantum Chaos Gameplay 4" class="screenshot-img" loading="lazy">
+                                    <div class="screenshot-overlay"><span class="zoom-icon">🔍</span></div>
+                                </div>
+                                <div class="screenshot-item" onclick="openLightbox(4)">
+                                    <img src="Assets/Screenshots/5.png" alt="Quantum Chaos Gameplay 5" class="screenshot-img" loading="lazy">
+                                    <div class="screenshot-overlay"><span class="zoom-icon">🔍</span></div>
+                                </div>
+                                <div class="screenshot-item" onclick="openLightbox(5)">
+                                    <img src="Assets/Screenshots/6.png" alt="Quantum Chaos Gameplay 6" class="screenshot-img" loading="lazy">
+                                    <div class="screenshot-overlay"><span class="zoom-icon">🔍</span></div>
+                                </div>
+                                <div class="screenshot-item" onclick="openLightbox(6)">
+                                    <img src="Assets/Screenshots/7.png" alt="Quantum Chaos Gameplay 7" class="screenshot-img" loading="lazy">
+                                    <div class="screenshot-overlay"><span class="zoom-icon">🔍</span></div>
+                                </div>
+                                <div class="screenshot-item" onclick="openLightbox(7)">
+                                    <img src="Assets/Screenshots/8.png" alt="Quantum Chaos Gameplay 8" class="screenshot-img" loading="lazy">
+                                    <div class="screenshot-overlay"><span class="zoom-icon">🔍</span></div>
+                                </div>
+                                <div class="screenshot-item" onclick="openLightbox(8)">
+                                    <img src="Assets/Screenshots/9.png" alt="Quantum Chaos Gameplay 9" class="screenshot-img" loading="lazy">
+                                    <div class="screenshot-overlay"><span class="zoom-icon">🔍</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control next" onclick="moveCarousel(1)">&#10095;</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Lightbox Modal -->
+            <div id="screenshot-lightbox" class="lightbox-modal" onclick="closeLightbox()">
+                <span class="lightbox-close">&times;</span>
+                <div class="lightbox-content-wrapper" onclick="event.stopPropagation()">
+                    <button class="lightbox-prev" onclick="prevLightboxImage()">&#10094;</button>
+                    <img id="lightbox-img" class="lightbox-img" src="" alt="Lightbox View">
+                    <button class="lightbox-next" onclick="nextLightboxImage()">&#10095;</button>
+                </div>
+            </div>
+
+            <!-- ==================== DEMO SECTION ==================== -->
+        <section id="demo" class="demo-section">
+            <div class="section-container">
+                <h2 class="section-title" data-i18n="demo_title">Interaktywne Demo</h2>
+                <div class="game-container-wrapper">
+                    <div class="game-container">
+                        <div class="godot-placeholder">
+                            <div class="placeholder-content">
+                                <div class="pulse-icon-wrapper">
+                                    <div class="pulse-icon"></div>
+                                </div>
+                                <h3 data-i18n="placeholder_title">Demo wkrótce</h3>
+                                <p data-i18n="placeholder_desc">Tutaj pojawi się grywalna wersja demo prosto z silnika Godot. Śledź nasz Discord, aby nie przegapić premiery!</p>
+                            </div>
+                        </div>
+                        <iframe id="game-iframe" src="" frameborder="0" allowfullscreen style="display: none; width: 100%; height: 100%;"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== COMMUNITY SECTION ==================== -->
+        <section id="community" class="community-section">
+            <div class="section-container">
+                <div class="community-box">
+                    <h2 data-i18n="comm_title">Dołącz do Społeczności</h2>
+                    <p data-i18n="comm_desc">Bądź na bieżąco z rozwojem, zgłaszaj pomysły i rywalizuj z innymi Obserwatorami!</p>
+                    
+                    <div class="community-layout">
+                        <!-- Discord Column -->
+                        <div class="community-column discord-column">
+                            <h3 data-i18n="discord_heading">Serwer Discord</h3>
+                            <p data-i18n="discord_text">Rozmawiaj bezpośrednio z twórcą, bierz udział w testach i zgłaszaj swoje propozycje zmian.</p>
+                            <a href="https://discord.gg/zdmUjnJr9" target="_blank" class="btn btn-discord btn-pulse">
+                                <svg class="discord-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.14 96.36">
+                                    <path fill="currentColor" d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.44,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36a77.7,77.7,0,0,0,6.63-10.85,68.43,68.43,0,0,1-10.4-5c.87-.64,1.71-1.32,2.51-2a75.7,75.7,0,0,0,72.82,0c.8.71,1.64,1.39,2.51,2a68.21,68.21,0,0,1-10.4,5A77.7,77.7,0,0,0,95.14,96.36a105.73,105.73,0,0,0,31-18.83C130,50.22,123.81,27.42,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.83,46,53.83,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.07,46,96.07,53,91,65.69,84.69,65.69Z"/>
+                                </svg>
+                                Discord Server
+                            </a>
+                        </div>
+                        
+                        <!-- Newsletter Column -->
+                        <div class="community-column newsletter-column">
+                            <h3 data-i18n="newsletter_heading">Kwantowy Biuletyn</h3>
+                            <p data-i18n="newsletter_text">Bądź pierwszy, gdy gra wyjdzie na Androida! Zostaw e-mail, aby otrzymać powiadomienie o premierze.</p>
+                            <!-- FormSubmit.co - 100% Free, GDPR compatible static form receiver -->
+                            <form action="https://formsubmit.co/hello.quarkling@gmail.com" method="POST" class="newsletter-form">
+                                <input type="text" name="_honey" style="display:none">
+                                <input type="hidden" name="_captcha" value="false">
+                                <input type="hidden" name="_subject" value="Quantum Chaos - Nowy zapis na listę Obserwatorów!">
+                                <div class="form-group">
+                                    <input type="email" name="email" placeholder="Twój e-mail..." required class="form-input" data-i18n-placeholder="newsletter_placeholder">
+                                    <button type="submit" class="btn btn-submit" data-i18n="newsletter_submit">Zapisz się</button>
+                                </div>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" required name="gdpr_consent" class="form-checkbox">
+                                    <span class="checkbox-text" data-i18n="newsletter_consent">Wyrażam zgodę na otrzymywanie informacji o premierze gry.</span>
+                                </label>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <p>&copy; 2026 Quantum Chaos. <span data-i18n="footer_rights">Wszelkie prawa zastrzeżone.</span></p>
+                <p class="footer-sub" data-i18n="footer_dev">Gra w aktywnym rozwoju</p>
+            </div>
+            <div class="footer-right">
+                <a href="#" id="footer-contact-link"><span data-i18n="footer_contact_label">Kontakt</span>: hello.quarkling@gmail.com</a>
+                <a href="privacy.html" data-i18n="footer_privacy" id="footer-privacy-link">Polityka Prywatności</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SVG Filters for precise Godot-like Multiplicative Modulate coloring -->
+    <svg width="0" height="0" style="position: absolute;">
+        <defs>
+            <filter id="color-cyan-filter">
+                <!-- Cyan tint: maps grayscale/white to #00ecf6, keeps black details -->
+                <feColorMatrix type="matrix" values="
+                    0 0 0 0 0.00
+                    0 0.925 0 0 0
+                    0 0 0.965 0 0
+                    0 0 0 1 0
+                " />
+            </filter>
+            <filter id="color-magenta-filter">
+                <!-- Magenta tint: maps grayscale/white to #fe2c9e, keeps black details -->
+                <feColorMatrix type="matrix" values="
+                    0.996 0 0 0 0
+                    0 0.172 0 0 0
+                    0 0 0.62 0 0
+                    0 0 0 1 0
+                " />
+            </filter>
+        </defs>
+    </svg>
+
+    <script src="script.js"></script>
+</body>
+</html>

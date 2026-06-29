@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polityka Prywatności / Privacy Policy - Quantum Chaos</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@700;900&family=Rajdhani:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-cyan: #00ecf6;
+            --color-magenta: #fe2c9e;
+            --bg-dark: #0a0b18;
+            --bg-darker: #05050c;
+            --bg-glass: rgba(10, 11, 24, 0.75);
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --font-main: 'Inter', sans-serif;
+            --font-title: 'Orbitron', sans-serif;
+            --font-accent: 'Rajdhani', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            font-family: var(--font-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: radial-gradient(circle at center, #0e0f2b 0%, var(--bg-darker) 100%);
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 3rem;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .logo-img {
+            max-width: 300px;
+            height: auto;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 15px rgba(0, 236, 246, 0.3));
+        }
+
+        h1 {
+            font-family: var(--font-title);
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #ffffff 40%, rgba(255, 255, 255, 0.7));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--color-cyan);
+            font-family: var(--font-accent);
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Hide elements of non-active language */
+        body.lang-pl .en-col { display: none; }
+        body.lang-pl .pl-col { display: block; }
+        body.lang-en .pl-col { display: none; }
+        body.lang-en .en-col { display: block; }
+
+        .layout-columns {
+            display: flex;
+            flex-direction: column;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .column {
+            background: rgba(255, 255, 255, 0.01);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Language Switcher */
+        .lang-switch-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2.5rem;
+        }
+        .lang-switch {
+            display: flex;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3px;
+            border-radius: 20px;
+            border: 1px solid var(--border-glass);
+        }
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            font-family: var(--font-accent);
+            font-weight: 700;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .lang-btn.active, .lang-btn:hover {
+            color: #fff;
+            background: linear-gradient(135deg, rgba(0, 236, 246, 0.2), rgba(254, 44, 158, 0.2));
+            border: 1px solid rgba(0, 236, 246, 0.3);
+            box-shadow: 0 0 10px rgba(0, 236, 246, 0.1);
+        }
+
+        .column-title {
+            font-family: var(--font-title);
+            font-size: 1.3rem;
+            color: var(--color-cyan);
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(0, 236, 246, 0.2);
+            padding-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .en-col .column-title {
+            color: var(--color-magenta);
+            border-bottom-color: rgba(254, 44, 158, 0.2);
+        }
+
+        h2 {
+            font-size: 1.05rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            font-family: var(--font-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        p {
+            font-size: 0.95rem;
+            color: #b0b5c6;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+            color: #b0b5c6;
+            font-size: 0.95rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight {
+            color: #fff;
+        }
+
+        .footer-back {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .btn-back {
+            display: inline-block;
+            background: transparent;
+            color: #fff;
+            border: 2px solid var(--color-cyan);
+            font-family: var(--font-accent);
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 0.75rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 0 10px rgba(0, 236, 246, 0.2);
+        }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+            background: rgba(0, 236, 246, 0.1);
+            box-shadow: 0 0 25px var(--color-cyan);
+            border-color: var(--color-cyan);
+        }
+
+        .site-footer {
+            text-align: center;
+            padding-top: 3rem;
+            color: rgba(255, 255, 255, 0.25);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 900px) {
+            .layout-columns {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="Assets/QuantumTitle.png" alt="Quantum Chaos Logo" class="logo-img">
+            <h1>Polityka Prywatności / Privacy Policy</h1>
+            <div class="subtitle">Zgodność z RODO / GDPR Compliance</div>
+        </header>
+
+        <div class="lang-switch-container">
+            <div class="lang-switch">
+                <button id="lang-pl" class="lang-btn">PL</button>
+                <button id="lang-en" class="lang-btn">EN</button>
+            </div>
+        </div>
+
+        <main class="layout-columns">
+            <!-- Polish version -->
+            <div class="column pl-col">
+                <div class="column-title">Polski</div>
+
+                <h2>1. Administrator Danych Osobowych</h2>
+                <p>Administratorem danych osobowych zbieranych za pośrednictwem strony internetowej jest twórca gry Quantum Chaos. Kontakt z administratorem jest możliwy pod adresem e-mail: <span class="highlight">hello.quarkling@gmail.com</span>.</p>
+
+                <h2>2. Zakres i cel przetwarzania danych</h2>
+                <p>Za pośrednictwem formularza newslettera na stronie gromadzony jest wyłącznie Twój <span class="highlight">adres e-mail</span>.</p>
+                <p>Dane te są przetwarzane wyłącznie w celu:</p>
+                <ul>
+                    <li>Powiadomienia Cię o premierze gry Quantum Chaos na system Android.</li>
+                    <li>Wysyłania najważniejszych aktualizacji związanych z rozwojem gry.</li>
+                </ul>
+
+                <h2>3. Podstawa prawna i okres przechowywania</h2>
+                <p>Podstawą prawną przetwarzania danych jest Twoja <span class="highlight">dobrowolna zgoda</span> (art. 6 ust. 1 lit. a RODO), wyrażona poprzez zaznaczenie odpowiedniego checkboxa przed wysłaniem formularza.</p>
+                <p>Dane będą przechowywane do momentu oficjalnej premiery gry lub do czasu wycofania przez Ciebie zgody.</p>
+
+                <h2>4. Odbiorcy danych i transfer</h2>
+                <p>Dane są przesyłane i obsługiwane za pośrednictwem darmowej i bezpiecznej usługi <span class="highlight">FormSubmit.co</span>, służącej do przekazywania wiadomości z formularzy statycznych na adres e-mail administratora. Dane nie są sprzedawane ani przekazywane innym podmiotom trzecim do celów marketingowych.</p>
+
+                <h2>5. Twoje prawa</h2>
+                <p>W związku z przetwarzaniem danych osobowych przysługuje Ci prawo do:</p>
+                <ul>
+                    <li>Wglądu do swoich danych oraz żądania ich sprostowania.</li>
+                    <li>Żądania <span class="highlight">całkowitego usunięcia danych</span> („prawo do bycia zapomnianym”) w dowolnym momencie.</li>
+                    <li>Wycofania zgody na przetwarzanie danych bez wpływu na zgodność z prawem przetwarzania przed jej wycofaniem.</li>
+                </ul>
+                <p>Aby skorzystać ze swoich praw, wyślij wiadomość e-mail na adres: <span class="highlight">hello.quarkling@gmail.com</span>. Twoje dane zostaną niezwłocznie usunięte.</p>
+
+                <h2>6. Pliki Cookies</h2>
+                <p>Strona jest hostowana na platformie GitHub Pages. Administrator nie stosuje własnych ciasteczek śledzących ani analitycznych. GitHub Pages może zbierać logi serwera w celu zapewnienia bezpieczeństwa i stabilności usługi.</p>
+            </div>
+
+            <!-- English version -->
+            <div class="column en-col">
+                <div class="column-title">English</div>
+
+                <h2>1. Data Controller</h2>
+                <p>The data controller for personal data collected through this website is the developer of Quantum Chaos. You can contact the controller via email at: <span class="highlight">hello.quarkling@gmail.com</span>.</p>
+
+                <h2>2. Scope and Purpose of Data Processing</h2>
+                <p>Only your <span class="highlight">email address</span> is collected via the newsletter form on this website.</p>
+                <p>This data is processed solely for the purpose of:</p>
+                <ul>
+                    <li>Notifying you about the launch of Quantum Chaos on Android.</li>
+                    <li>Sending key updates regarding the game's development.</li>
+                </ul>
+
+                <h2>3. Legal Basis and Retention Period</h2>
+                <p>The legal basis for processing your data is your <span class="highlight">voluntary consent</span> (Art. 6(1)(a) GDPR), expressed by checking the required consent box before submitting the form.</p>
+                <p>Your data will be stored until the official launch of the game or until you withdraw your consent.</p>
+
+                <h2>4. Data Recipients and Transfer</h2>
+                <p>Form submissions are processed via <span class="highlight">FormSubmit.co</span>, a secure and free service that forwards submissions from static forms to the controller's email address. We do not sell or share your data with other third parties for marketing purposes.</p>
+
+                <h2>5. Your Rights</h2>
+                <p>Regarding your personal data, you have the right to:</p>
+                <ul>
+                    <li>Access your data and request rectification.</li>
+                    <li>Request the <span class="highlight">complete erasure of your data</span> ("right to be forgotten") at any time.</li>
+                    <li>Withdraw your consent at any time, without affecting the lawfulness of processing based on consent before its withdrawal.</li>
+                </ul>
+                <p>To exercise your rights, please send an email to: <span class="highlight">hello.quarkling@gmail.com</span>. Your data will be deleted immediately.</p>
+
+                <h2>6. Cookies</h2>
+                <p>This website is hosted on GitHub Pages. The controller does not use own tracking or analytical cookies. GitHub Pages may collect basic server logs to ensure service security and stability.</p>
+            </div>
+        </main>
+
+        <div class="footer-back">
+            <a href="index.html" class="btn btn-back">Powrót / Back</a>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <p class="pl-col">&copy; 2026 Quantum Chaos. Wszelkie prawa zastrzeżone.</p>
+        <p class="en-col">&copy; 2026 Quantum Chaos. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function updateLanguage(lang) {
+            document.body.className = `lang-${lang}`;
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = document.getElementById(`lang-${lang}`);
+            if (activeBtn) activeBtn.classList.add('active');
+            localStorage.setItem('preferredLanguage', lang);
+            document.documentElement.lang = lang;
+        }
+
+        // Init language based on localStorage or browser preference
+        let currentLang = localStorage.getItem('preferredLanguage');
+        if (!currentLang) {
+            const browserLang = navigator.language || navigator.userLanguage;
+            currentLang = browserLang.startsWith('pl') ? 'pl' : 'en';
+        }
+        updateLanguage(currentLang);
+
+        // Event listeners
+        document.getElementById('lang-pl').addEventListener('click', () => updateLanguage('pl'));
+        document.getElementById('lang-en').addEventListener('click', () => updateLanguage('en'));
+    </script>
+</body>
+</html>
