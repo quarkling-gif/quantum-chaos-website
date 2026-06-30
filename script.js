@@ -1140,7 +1140,7 @@ function handleReleaseTap(tapPos) {
     }
 }
 
-function triggerShockwave(x, y, color, diameter) {
+function triggerShockwave(x, y, color, diameter, parentEl = null) {
     const ring = document.createElement('div');
     ring.className = 'shockwave-ring';
     ring.style.setProperty('--color', color);
@@ -1148,8 +1148,8 @@ function triggerShockwave(x, y, color, diameter) {
     ring.style.left = `${x}px`;
     ring.style.top = `${y}px`;
     
-    const pView = document.querySelector('.particle-view');
-    if (pView) pView.appendChild(ring);
+    const target = parentEl || document.querySelector('.particle-view');
+    if (target) target.appendChild(ring);
     
     setTimeout(() => {
         ring.remove();
@@ -1300,6 +1300,94 @@ function showFloatingScore(text, isChaos, x, y) {
     }, 1600);
 }
 
+// ===================== INTERACTIVE CORE CARD 3 =====================
+function startCoreIdleShake() {
+    const coreImg = document.getElementById('interactive-core-img');
+    if (!coreImg) return;
+    
+    function triggerShake() {
+        if (!coreImg.classList.contains('core-clicked')) {
+            coreImg.classList.remove('core-shake');
+            void coreImg.offsetWidth; // trigger reflow
+            coreImg.classList.add('core-shake');
+            
+            setTimeout(() => {
+                coreImg.classList.remove('core-shake');
+            }, 450);
+        }
+        
+        // Schedule next shake at random interval (4 to 7 seconds)
+        const nextInterval = 4000 + Math.random() * 3000;
+        setTimeout(triggerShake, nextInterval);
+    }
+    
+    // Start first shake
+    setTimeout(triggerShake, 3000);
+}
+
+function initInteractiveCore() {
+    const coreImg = document.getElementById('interactive-core-img');
+    if (!coreImg) return;
+    
+    // Core comic-style text collections
+    const coreTexts = {
+        pl: ['KLIK!', 'POP!', 'PUK!', 'BAM!', 'PAC!'],
+        en: ['CLICK!', 'POP!', 'BONK!', 'BAM!', 'ZAP!']
+    };
+    
+    // 3 distinct position offset options (Top-Left, Center, Top-Right) with rotations
+    const positions = [
+        { x: -35, y: -25, rot: -12 },  // Top-Left
+        { x: 0,   y: -45, rot: 0 },    // Center
+        { x: 35,  y: -25, rot: 12 }    // Top-Right
+    ];
+    
+    coreImg.addEventListener('click', (e) => {
+        if (coreImg.classList.contains('core-clicked')) return;
+        
+        coreImg.classList.add('core-clicked');
+        setTimeout(() => {
+            coreImg.classList.remove('core-clicked');
+        }, 150);
+        
+        // Calculate center position of the core image relative to document
+        const rect = coreImg.getBoundingClientRect();
+        const localX = rect.width / 2;
+        const localY = rect.height / 2;
+        
+        // Page absolute coordinates
+        const absX = rect.left + window.scrollX + localX;
+        const absY = rect.top + window.scrollY + localY;
+        
+        // Trigger golden shockwave on body
+        triggerShockwave(absX, absY, 'var(--color-gold)', 120, document.body);
+        
+        // Select random comic text
+        const textList = coreTexts[currentLanguage] || coreTexts['en'];
+        const text = textList[Math.floor(Math.random() * textList.length)];
+        
+        // Select random position offset and rotation
+        const pos = positions[Math.floor(Math.random() * positions.length)];
+        const textX = absX + pos.x;
+        const textY = absY + pos.y;
+        
+        const scoreEl = document.createElement('div');
+        scoreEl.className = 'floating-score gold';
+        scoreEl.textContent = text;
+        scoreEl.style.left = `${textX}px`;
+        scoreEl.style.top = `${textY}px`;
+        scoreEl.style.setProperty('--rot', `${pos.rot}deg`);
+        
+        document.body.appendChild(scoreEl);
+        
+        setTimeout(() => {
+            scoreEl.remove();
+        }, 1600);
+    });
+    
+    startCoreIdleShake();
+}
+
 // ===================== INIT =====================
 resizeCanvas();
 animateStars();
@@ -1315,5 +1403,6 @@ setLanguage(initialLang);
 startQuinnSpeechLoop();
 startParticleLoop();
 initInteractiveParticles();
+initInteractiveCore();
 updateParticleShowcase(false);
 startCarouselTimer();
