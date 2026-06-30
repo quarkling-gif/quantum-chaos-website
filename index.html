@@ -217,21 +217,51 @@
                     <div class="community-layout">
                         <!-- Discord Column -->
                         <div class="community-column discord-column">
-                            <h3 data-i18n="discord_heading">Serwer Discord</h3>
-                            <p data-i18n="discord_text">Rozmawiaj bezpośrednio z twórcą, bierz udział w testach i zgłaszaj swoje propozycje zmian.</p>
-                            <a href="https://discord.gg/zdmUjnJr9" target="_blank" class="btn btn-discord btn-pulse">
-                                <svg class="discord-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.14 96.36">
-                                    <path fill="currentColor" d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.44,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36a77.7,77.7,0,0,0,6.63-10.85,68.43,68.43,0,0,1-10.4-5c.87-.64,1.71-1.32,2.51-2a75.7,75.7,0,0,0,72.82,0c.8.71,1.64,1.39,2.51,2a68.21,68.21,0,0,1-10.4,5A77.7,77.7,0,0,0,95.14,96.36a105.73,105.73,0,0,0,31-18.83C130,50.22,123.81,27.42,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.83,46,53.83,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.07,46,96.07,53,91,65.69,84.69,65.69Z"/>
-                                </svg>
-                                Discord Server
-                            </a>
+                            <!-- Left Side: Benefits -->
+                            <div class="discord-benefits-side">
+                                <ul class="discord-benefits-list">
+                                    <li>
+                                        <span class="benefit-icon">📢</span>
+                                        <div class="benefit-content">
+                                            <strong data-i18n="discord_benefit1_title">Informacje o premierze</strong>
+                                            <p data-i18n="discord_benefit1_desc">Otrzymaj powiadomienie na `#announcements` dokładnie w momencie, gdy wersja na Androida trafi do Google Play!</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="benefit-icon">⚖️</span>
+                                        <div class="benefit-content">
+                                            <strong data-i18n="discord_benefit2_title">Współtworzenie balansu</strong>
+                                            <p data-i18n="discord_benefit2_desc">Graj w demo i pomóż mi dopracować balans rozgrywki przed premierą w kanale `#feedback`.</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="benefit-icon">🏆</span>
+                                        <div class="benefit-content">
+                                            <strong data-i18n="discord_benefit3_title">Kwantowa rywalizacja</strong>
+                                            <p data-i18n="discord_benefit3_desc">Wrzucaj zrzuty ekranu ze swoimi rekordami na `#media` i rywalizuj z innymi Obserwatorami.</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Right Side: CTA Button -->
+                            <div class="discord-cta-side">
+                                <img src="Assets/Icon_432x432.png" alt="Quantum Chaos Logo" class="discord-game-icon">
+                                <h3 data-i18n="discord_heading">Serwer Discord</h3>
+                                <p class="discord-cta-text" data-i18n="discord_cta_subtext">Wejdź do gry i dołącz do naszej społeczności!</p>
+                                <a href="https://discord.gg/u4ZUQzcpVF" target="_blank" class="btn btn-discord btn-pulse">
+                                    <svg class="discord-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.14 96.36">
+                                        <path fill="currentColor" d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.44,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36a77.7,77.7,0,0,0,6.63-10.85,68.43,68.43,0,0,1-10.4-5c.87-.64,1.71-1.32,2.51-2a75.7,75.7,0,0,0,72.82,0c.8.71,1.64,1.39,2.51,2a68.21,68.21,0,0,1-10.4,5A77.7,77.7,0,0,0,95.14,96.36a105.73,105.73,0,0,0,31-18.83C130,50.22,123.81,27.42,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.83,46,53.83,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.07,46,96.07,53,91,65.69,84.69,65.69Z"/>
+                                    </svg>
+                                    Discord Server
+                                </a>
+                            </div>
                         </div>
                         
-                        <!-- Newsletter Column -->
+                        <!-- Newsletter Column (Commented out because we are disabling the newsletter for now)
                         <div class="community-column newsletter-column">
                             <h3 data-i18n="newsletter_heading">Kwantowy Biuletyn</h3>
                             <p data-i18n="newsletter_text">Bądź pierwszy, gdy gra wyjdzie na Androida! Zostaw e-mail, aby otrzymać powiadomienie o premierze.</p>
-                            <!-- FormSubmit.co - 100% Free, GDPR compatible static form receiver -->
                             <form action="https://formsubmit.co/hello.quarkling@gmail.com" method="POST" class="newsletter-form">
                                 <input type="text" name="_honey" style="display:none">
                                 <input type="hidden" name="_captcha" value="false">
@@ -246,6 +276,7 @@
                                 </label>
                             </form>
                         </div>
+                        -->
                     </div>
                 </div>
             </div>
@@ -261,7 +292,7 @@
             </div>
             <div class="footer-right">
                 <a href="#" id="footer-contact-link"><span data-i18n="footer_contact_label">Kontakt</span>: hello.quarkling@gmail.com</a>
-                <a href="privacy.html" data-i18n="footer_privacy" id="footer-privacy-link">Polityka Prywatności</a>
+                <!-- <a href="privacy.html" data-i18n="footer_privacy" id="footer-privacy-link">Polityka Prywatności</a> (Commented out because the newsletter is disabled) -->
             </div>
         </div>
     </footer>
