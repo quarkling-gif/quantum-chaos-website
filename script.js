@@ -1300,31 +1300,23 @@ function showFloatingScore(text, isChaos, x, y) {
     }, 1600);
 }
 
-// ===================== INTERACTIVE CORE CARD 3 =====================
-function startCoreIdleShake() {
-    const coreImg = document.getElementById('interactive-core-img');
-    if (!coreImg) return;
+// ===================== INTERACTIVE KWANTAK CARD 2 =====================
+function initInteractiveKwantak() {
+    const kwantakImg = document.getElementById('interactive-kwantak-img');
+    const wrapper = document.querySelector('.kwantak-bounce-wrapper');
+    if (!kwantakImg || !wrapper) return;
     
-    function triggerShake() {
-        if (!coreImg.classList.contains('core-clicked')) {
-            coreImg.classList.remove('core-shake');
-            void coreImg.offsetWidth; // trigger reflow
-            coreImg.classList.add('core-shake');
-            
-            setTimeout(() => {
-                coreImg.classList.remove('core-shake');
-            }, 450);
-        }
+    kwantakImg.addEventListener('click', () => {
+        if (wrapper.classList.contains('kwantak-hop')) return;
         
-        // Schedule next shake at random interval (4 to 7 seconds)
-        const nextInterval = 4000 + Math.random() * 3000;
-        setTimeout(triggerShake, nextInterval);
-    }
-    
-    // Start first shake
-    setTimeout(triggerShake, 3000);
+        wrapper.classList.add('kwantak-hop');
+        setTimeout(() => {
+            wrapper.classList.remove('kwantak-hop');
+        }, 500);
+    });
 }
 
+// ===================== INTERACTIVE CORE CARD 3 =====================
 function initInteractiveCore() {
     const coreImg = document.getElementById('interactive-core-img');
     if (!coreImg) return;
@@ -1384,8 +1376,6 @@ function initInteractiveCore() {
             scoreEl.remove();
         }, 1600);
     });
-    
-    startCoreIdleShake();
 }
 
 // ===================== INIT =====================
@@ -1403,6 +1393,7 @@ setLanguage(initialLang);
 startQuinnSpeechLoop();
 startParticleLoop();
 initInteractiveParticles();
+initInteractiveKwantak();
 initInteractiveCore();
 updateParticleShowcase(false);
 startCarouselTimer();
