@@ -128,6 +128,11 @@ function setLanguage(lang) {
     
     // Refresh active particle description immediately on language change
     updateParticleShowcase(false);
+
+    // Refresh Quinn's speech bubble immediately on language change
+    if (typeof refreshQuinnSpeech === 'function') {
+        refreshQuinnSpeech();
+    }
 }
 
 document.getElementById('lang-pl').addEventListener('click', () => setLanguage('pl'));
@@ -227,16 +232,41 @@ const quinnSpeeches = {
     }
 };
 
-function getRandomSpeech(type) {
-    const list = quinnSpeeches[currentLanguage][type];
-    return list[Math.floor(Math.random() * list.length)];
+let quinnSpeechCategory = 'idle';
+let quinnSpeechIndex = 0;
+
+function setQuinnSpeech(category, index = null) {
+    quinnSpeechCategory = category;
+    if (index === null) {
+        if (category === 'idle' || category === 'poke' || category === 'pissed') {
+            const list = quinnSpeeches[currentLanguage][category];
+            index = Math.floor(Math.random() * list.length);
+        }
+    }
+    quinnSpeechIndex = index;
+    refreshQuinnSpeech();
+}
+
+function refreshQuinnSpeech() {
+    if (typeof quinnBubbleText !== 'undefined' && quinnBubbleText) {
+        if (quinnSpeechCategory === 'shield') {
+            quinnBubbleText.textContent = translations[currentLanguage].quinn_shield_back;
+        } else if (quinnSpeechCategory === 'back') {
+            quinnBubbleText.textContent = quinnSpeeches[currentLanguage].back;
+        } else {
+            const list = quinnSpeeches[currentLanguage][quinnSpeechCategory];
+            if (list && list[quinnSpeechIndex] !== undefined) {
+                quinnBubbleText.textContent = list[quinnSpeechIndex];
+            }
+        }
+    }
 }
 
 function startQuinnSpeechLoop() {
     if (quinnSpeechTimer) clearInterval(quinnSpeechTimer);
     quinnSpeechTimer = setInterval(() => {
         if (!isQuinnHiding) {
-            quinnBubbleText.textContent = getRandomSpeech('idle');
+            setQuinnSpeech('idle');
         }
     }, 10000);
 }
@@ -254,7 +284,7 @@ quinnCharacter.addEventListener('click', () => {
     
     // Quinn reacts depending on clicks
     if (quinnClicks < 5) {
-        quinnBubbleText.textContent = getRandomSpeech('poke');
+        setQuinnSpeech('poke');
         playPokeSound();
         
         // Remove poke animation class after it finishes
@@ -264,7 +294,7 @@ quinnCharacter.addEventListener('click', () => {
     } else {
         // PISSED OFF STATE - disappears!
         isQuinnHiding = true;
-        quinnBubbleText.textContent = getRandomSpeech('pissed');
+        setQuinnSpeech('pissed');
         playTeleportSound();
         
         quinnCharacter.classList.remove('poke');
@@ -294,9 +324,9 @@ quinnCharacter.addEventListener('click', () => {
             if (quinnAngerCount === 3) {
                 isQuinnShielded = true;
                 quinnCharacter.classList.add('shielded');
-                quinnBubbleText.textContent = translations[currentLanguage].quinn_shield_back;
+                setQuinnSpeech('shield');
             } else {
-                quinnBubbleText.textContent = quinnSpeeches[currentLanguage].back;
+                setQuinnSpeech('back');
             }
             
             // Reset transition property
