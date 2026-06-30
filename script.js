@@ -404,6 +404,7 @@ const particleData = {
 let currentParticleIndex = 0;
 let entangledStateTimer = null;
 let currentEntangledState = 'good';
+let particleLoopInterval = null;
 
 function updateParticleShowcase(animate = true) {
     // Reset interaction state
@@ -492,10 +493,17 @@ function updateParticleShowcase(animate = true) {
     }, animate ? 150 : 0);
 }
 
+function nextParticle() {
+    currentParticleIndex = (currentParticleIndex + 1) % particleData[currentLanguage].length;
+    updateParticleShowcase(true);
+}
+
 function startParticleLoop() {
-    setInterval(() => {
-        currentParticleIndex = (currentParticleIndex + 1) % particleData[currentLanguage].length;
-        updateParticleShowcase(true);
+    if (particleLoopInterval) {
+        clearInterval(particleLoopInterval);
+    }
+    particleLoopInterval = setInterval(() => {
+        nextParticle();
     }, 4000);
 }
 
@@ -831,6 +839,7 @@ function initInteractiveParticles() {
     
     // Mouse Events
     pView.addEventListener('mousedown', (e) => {
+        e.preventDefault();
         isDrawing = true;
         const rect = slashCanvasEl.getBoundingClientRect();
         startPos = {
@@ -843,8 +852,14 @@ function initInteractiveParticles() {
         triggerShockwave(startPos.x, startPos.y, 'var(--color-cyan)', 60);
     });
     
-    pView.addEventListener('mousemove', (e) => {
+    window.addEventListener('mousemove', (e) => {
         if (!isDrawing) return;
+        if (e.buttons !== 1) {
+            isDrawing = false;
+            startPos = null;
+            currentPos = null;
+            return;
+        }
         const rect = slashCanvasEl.getBoundingClientRect();
         currentPos = {
             x: e.clientX - rect.left,
@@ -863,14 +878,6 @@ function initInteractiveParticles() {
         } : (currentPos || startPos);
         
         handleInteractionRelease(startPos, endPos);
-        startPos = null;
-        currentPos = null;
-    });
-    
-    pView.addEventListener('mouseleave', () => {
-        if (!isDrawing) return;
-        isDrawing = false;
-        handleInteractionRelease(startPos, currentPos || startPos);
         startPos = null;
         currentPos = null;
     });
@@ -1150,12 +1157,12 @@ function triggerShockwave(x, y, color, diameter) {
 }
 
 function advanceSlideOnSuccess() {
-    if (carouselTimer) {
-        clearInterval(carouselTimer);
+    if (particleLoopInterval) {
+        clearInterval(particleLoopInterval);
     }
     setTimeout(() => {
         nextParticle();
-        startCarouselTimer();
+        startParticleLoop();
     }, 1200);
 }
 
@@ -1227,6 +1234,18 @@ function triggerPenalty(x, y, scoreText) {
     card.classList.add('shake-card');
     
     showFloatingScore(scoreText, true, x, y);
+    
+    // Annihilate particle elements and line on penalty (1:1 with game collapse)
+    const dParticle = document.getElementById('dynamic-particle');
+    const dPartner = document.getElementById('dynamic-particle-partner');
+    const dLine = document.getElementById('dynamic-particle-line');
+    
+    if (dParticle) dParticle.classList.add('annihilated');
+    if (dPartner) dPartner.classList.add('annihilated');
+    if (dLine) dLine.style.opacity = '0';
+    
+    // Advance to the next slide in 1.2 seconds
+    advanceSlideOnSuccess();
     
     setTimeout(() => {
         card.classList.remove('shake-card');
