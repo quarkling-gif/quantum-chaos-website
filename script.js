@@ -346,6 +346,14 @@ const particleLine = document.getElementById('dynamic-particle-line');
 const particleBadgeText = document.getElementById('particle-badge-text');
 const particleDescText = document.getElementById('particle-desc-text');
 
+let slashCanvasEl = null;
+let slashCtx = null;
+let particleInteracted = false;
+let isDrawing = false;
+let startPos = null;
+let currentPos = null;
+let activeSlices = [];
+
 const particleData = {
     pl: [
         {
@@ -398,6 +406,34 @@ let entangledStateTimer = null;
 let currentEntangledState = 'good';
 
 function updateParticleShowcase(animate = true) {
+    // Reset interaction state
+    particleInteracted = false;
+    isDrawing = false;
+    startPos = null;
+    currentPos = null;
+    activeSlices = [];
+    if (slashCtx && slashCanvasEl) {
+        slashCtx.clearRect(0, 0, slashCanvasEl.width, slashCanvasEl.height);
+    }
+    
+    // Clear dynamic DOM objects
+    const pView = document.querySelector('.particle-view');
+    if (pView) {
+        pView.querySelectorAll('.particle-spark, .floating-score, .shockwave-ring').forEach(el => el.remove());
+    }
+    
+    // Reset classes and styles on particles
+    particleElement.classList.remove('popped', 'severed-left', 'severed-right');
+    particleElement.style.opacity = '';
+    particleElement.style.display = '';
+    
+    particlePartner.classList.remove('popped', 'severed-left', 'severed-right');
+    particlePartner.style.opacity = '';
+    particlePartner.style.display = '';
+    
+    particleLine.style.opacity = '';
+    particleLine.style.display = '';
+
     const data = particleData[currentLanguage][currentParticleIndex];
     
     if (animate) {
@@ -775,6 +811,466 @@ document.addEventListener('dragstart', (e) => {
     }
 });
 
+// ===================== INTERACTIVE PARTICLES LOGIC =====================
+function initInteractiveParticles() {
+    slashCanvasEl = document.getElementById('slash-canvas');
+    if (!slashCanvasEl) return;
+    slashCtx = slashCanvasEl.getContext('2d');
+    
+    function resizeCanvas() {
+        const rect = slashCanvasEl.parentElement.getBoundingClientRect();
+        slashCanvasEl.width = rect.width;
+        slashCanvasEl.height = rect.height;
+    }
+    
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    const pView = document.querySelector('.particle-view');
+    if (!pView) return;
+    
+    // Mouse Events
+    pView.addEventListener('mousedown', (e) => {
+        if (particleInteracted) return;
+        isDrawing = true;
+        const rect = slashCanvasEl.getBoundingClientRect();
+        startPos = {
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
+        };
+        currentPos = { ...startPos };
+        
+        // Spawn Press Wave (fala tapnięcia)
+        triggerShockwave(startPos.x, startPos.y, 'var(--color-cyan)', 60);
+    });
+    
+    pView.addEventListener('mousemove', (e) => {
+        if (!isDrawing || particleInteracted) return;
+        const rect = slashCanvasEl.getBoundingClientRect();
+        currentPos = {
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
+        };
+    });
+    
+    window.addEventListener('mouseup', (e) => {
+        if (!isDrawing) return;
+        isDrawing = false;
+        
+        const rect = slashCanvasEl.getBoundingClientRect();
+        const endPos = (e.clientX !== undefined) ? {
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
+        } : (currentPos || startPos);
+        
+        handleInteractionRelease(startPos, endPos);
+        startPos = null;
+        currentPos = null;
+    });
+    
+    pView.addEventListener('mouseleave', () => {
+        if (!isDrawing) return;
+        isDrawing = false;
+        handleInteractionRelease(startPos, currentPos || startPos);
+        startPos = null;
+        currentPos = null;
+    });
+    
+    // Touch Events (Mobile support with scroll prevention)
+    pView.addEventListener('touchstart', (e) => {
+        if (particleInteracted) return;
+        isDrawing = true;
+        const rect = slashCanvasEl.getBoundingClientRect();
+        startPos = {
+            x: e.touches[0].clientX - rect.left,
+            y: e.touches[0].clientY - rect.top
+        };
+        currentPos = { ...startPos };
+        
+        // Spawn Press Wave (fala tapnięcia)
+        triggerShockwave(startPos.x, startPos.y, 'var(--color-cyan)', 60);
+        e.preventDefault();
+    }, { passive: false });
+    
+    pView.addEventListener('touchmove', (e) => {
+        if (!isDrawing || particleInteracted) return;
+        const rect = slashCanvasEl.getBoundingClientRect();
+        currentPos = {
+            x: e.touches[0].clientX - rect.left,
+            y: e.touches[0].clientY - rect.top
+        };
+        e.preventDefault();
+    }, { passive: false });
+    
+    pView.addEventListener('touchend', (e) => {
+        if (!isDrawing) return;
+        isDrawing = false;
+        
+        const endPos = currentPos || startPos;
+        handleInteractionRelease(startPos, endPos);
+        startPos = null;
+        currentPos = null;
+        e.preventDefault();
+    }, { passive: false });
+    
+    animateSlashTrail();
+}
+
+function animateSlashTrail() {
+    if (!slashCtx || !slashCanvasEl) return;
+    slashCtx.clearRect(0, 0, slashCanvasEl.width, slashCanvasEl.height);
+    
+    const now = Date.now();
+    
+    // 1. Rysowanie linii celowania wektorowego (Aiming Preview)
+    if (isDrawing && startPos && currentPos) {
+        const grad = slashCtx.createLinearGradient(startPos.x, startPos.y, currentPos.x, currentPos.y);
+        grad.addColorStop(0, 'rgba(0, 236, 246, 0.45)');
+        grad.addColorStop(1, 'rgba(0, 236, 246, 0.0)');
+        
+        slashCtx.strokeStyle = grad;
+        slashCtx.lineWidth = 4;
+        slashCtx.lineCap = 'round';
+        slashCtx.shadowBlur = 8;
+        slashCtx.shadowColor = 'rgba(0, 236, 246, 0.4)';
+        
+        slashCtx.beginPath();
+        slashCtx.moveTo(startPos.x, startPos.y);
+        slashCtx.lineTo(currentPos.x, currentPos.y);
+        slashCtx.stroke();
+    }
+    
+    // 2. Rysowanie finalnych cięć wektorowych (Slice Visual Effect)
+    activeSlices = activeSlices.filter(slice => now - slice.startTime < slice.duration);
+    
+    activeSlices.forEach(slice => {
+        const progress = (now - slice.startTime) / slice.duration;
+        const alpha = 0.8 * (1 - progress);
+        
+        const grad = slashCtx.createLinearGradient(slice.start.x, slice.start.y, slice.end.x, slice.end.y);
+        grad.addColorStop(0, `rgba(255, 255, 255, ${alpha})`);
+        grad.addColorStop(0.3, `rgba(0, 236, 246, ${alpha * 0.8})`);
+        grad.addColorStop(1, `rgba(0, 236, 246, 0)`);
+        
+        slashCtx.strokeStyle = grad;
+        slashCtx.lineWidth = 9 * (1 - progress);
+        slashCtx.lineCap = 'round';
+        slashCtx.shadowBlur = 12 * (1 - progress);
+        slashCtx.shadowColor = 'rgba(0, 236, 246, 0.5)';
+        
+        slashCtx.beginPath();
+        slashCtx.moveTo(slice.start.x, slice.start.y);
+        slashCtx.lineTo(slice.end.x, slice.end.y);
+        slashCtx.stroke();
+    });
+    
+    requestAnimationFrame(animateSlashTrail);
+}
+
+function handleInteractionRelease(start, end) {
+    if (!start || !end) return;
+    
+    const dx = end.x - start.x;
+    const dy = end.y - start.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    
+    // Próg przeciągnięcia przeskalowany do rozmiarów kafelka (140x120px)
+    if (dist > 25) {
+        // Wykonaj Cięcie wektorowe!
+        activeSlices.push({
+            start: { ...start },
+            end: { ...end },
+            startTime: Date.now(),
+            duration: 250
+        });
+        
+        checkReleaseSliceCollisions(start, end);
+    } else {
+        // Wykonaj Tapnięcie!
+        handleReleaseTap(start);
+    }
+}
+
+function getElementCenter(el) {
+    return {
+        x: el.offsetLeft + el.offsetWidth / 2,
+        y: el.offsetTop + el.offsetHeight / 2
+    };
+}
+
+function checkCircleSegmentIntersection(center, radius, segStart, segEnd) {
+    const ac = { x: center.x - segStart.x, y: center.y - segStart.y };
+    const ab = { x: segEnd.x - segStart.x, y: segEnd.y - segStart.y };
+    const abLenSq = ab.x * ab.x + ab.y * ab.y;
+    if (abLenSq === 0) {
+        const dist = Math.sqrt(ac.x * ac.x + ac.y * ac.y);
+        return dist <= radius;
+    }
+    let t = (ac.x * ab.x + ac.y * ab.y) / abLenSq;
+    t = Math.max(0, Math.min(1, t));
+    const closest = { x: segStart.x + t * ab.x, y: segStart.y + t * ab.y };
+    const dx = center.x - closest.x;
+    const dy = center.y - closest.y;
+    return Math.sqrt(dx * dx + dy * dy) <= radius;
+}
+
+function checkLineIntersection(l1Start, l1End, l2Start, l2End) {
+    const denominator = ((l2End.y - l2Start.y) * (l1End.x - l1Start.x)) - ((l2End.x - l2Start.x) * (l1End.y - l1Start.y));
+    if (denominator === 0) return false;
+    let a = l1Start.y - l2Start.y;
+    let b = l1Start.x - l2Start.x;
+    const numerator1 = ((l2End.x - l2Start.x) * a) - ((l2End.y - l2Start.y) * b);
+    const numerator2 = ((l1End.x - l1Start.x) * a) - ((l1End.y - l1Start.y) * b);
+    a = numerator1 / denominator;
+    b = numerator2 / denominator;
+    return (a > 0 && a < 1) && (b > 0 && b < 1);
+}
+
+function getClosestPointOnSegment(p, segStart, segEnd) {
+    const ab = { x: segEnd.x - segStart.x, y: segEnd.y - segStart.y };
+    const ap = { x: p.x - segStart.x, y: p.y - segStart.y };
+    const abLenSq = ab.x * ab.x + ab.y * ab.y;
+    if (abLenSq === 0) return segStart;
+    let t = (ap.x * ab.x + ap.y * ab.y) / abLenSq;
+    t = Math.max(0, Math.min(1, t));
+    return { x: segStart.x + t * ab.x, y: segStart.y + t * ab.y };
+}
+
+// Odległość między punktami
+function getDistance(p1, p2) {
+    const dx = p1.x - p2.x;
+    const dy = p1.y - p2.y;
+    return Math.sqrt(dx * dx + dy * dy);
+}
+
+function checkReleaseSliceCollisions(start, end) {
+    const data = particleData[currentLanguage][currentParticleIndex];
+    const type = data.class;
+    
+    const dParticle = document.getElementById('dynamic-particle');
+    const dPartner = document.getElementById('dynamic-particle-partner');
+    
+    if (type === 'quark') {
+        const center = getElementCenter(dParticle);
+        if (checkCircleSegmentIntersection(center, 28, start, end)) {
+            triggerPenalty(center.x, center.y, '+12');
+        }
+    } else if (type === 'meson') {
+        const center = getElementCenter(dParticle);
+        if (checkCircleSegmentIntersection(center, 18, start, end)) {
+            triggerMesonSlice(center.x, center.y);
+        }
+    } else if (type === 'entangled') {
+        const p1Center = getElementCenter(dParticle);
+        const p2Center = getElementCenter(dPartner);
+        
+        if (checkLineIntersection(start, end, p1Center, p2Center)) {
+            const closestToP1 = getClosestPointOnSegment(p1Center, start, end);
+            const closestToP2 = getClosestPointOnSegment(p2Center, start, end);
+            
+            const distToP1 = getDistance(p1Center, closestToP1);
+            const distToP2 = getDistance(p2Center, closestToP2);
+            
+            if (distToP1 >= 30 && distToP2 >= 30) {
+                if (currentEntangledState === 'bad') {
+                    triggerEntangledSliceSuccess(p1Center, p2Center);
+                } else {
+                    const midX = (p1Center.x + p2Center.x) / 2;
+                    const midY = (p1Center.y + p2Center.y) / 2;
+                    triggerPenalty(midX, midY, '+12');
+                }
+            }
+        }
+    } else if (type === 'antimatter') {
+        const center = getElementCenter(dParticle);
+        if (checkCircleSegmentIntersection(center, 31, start, end)) {
+            triggerPenalty(center.x, center.y, '+25');
+        }
+    }
+}
+
+function handleReleaseTap(tapPos) {
+    const data = particleData[currentLanguage][currentParticleIndex];
+    const type = data.class;
+    const dParticle = document.getElementById('dynamic-particle');
+    const dPartner = document.getElementById('dynamic-particle-partner');
+    
+    if (type === 'quark') {
+        const center = getElementCenter(dParticle);
+        if (getDistance(tapPos, center) <= 28) {
+            triggerQuarkPop(center.x, center.y);
+        }
+    } else if (type === 'meson') {
+        const center = getElementCenter(dParticle);
+        if (getDistance(tapPos, center) <= 18) {
+            triggerPenalty(center.x, center.y, '+12');
+        }
+    } else if (type === 'entangled') {
+        const c1 = getElementCenter(dParticle);
+        const c2 = getElementCenter(dPartner);
+        
+        if (getDistance(tapPos, c1) <= 20) {
+            if (currentEntangledState === 'good') {
+                triggerEntangledTapSuccess();
+            } else {
+                triggerPenalty(c1.x, c1.y, '+12');
+            }
+        } else if (getDistance(tapPos, c2) <= 20) {
+            if (currentEntangledState === 'good') {
+                triggerEntangledTapSuccess();
+            } else {
+                triggerPenalty(c2.x, c2.y, '+12');
+            }
+        }
+    } else if (type === 'antimatter') {
+        const center = getElementCenter(dParticle);
+        if (getDistance(tapPos, center) <= 31) {
+            triggerPenalty(center.x, center.y, '+25');
+        }
+    }
+}
+
+function triggerShockwave(x, y, color, diameter) {
+    const ring = document.createElement('div');
+    ring.className = 'shockwave-ring';
+    ring.style.setProperty('--color', color);
+    ring.style.setProperty('--max-radius', `${diameter}px`);
+    ring.style.left = `${x}px`;
+    ring.style.top = `${y}px`;
+    
+    const pView = document.querySelector('.particle-view');
+    if (pView) pView.appendChild(ring);
+    
+    setTimeout(() => {
+        ring.remove();
+    }, 300);
+}
+
+function advanceSlideOnSuccess() {
+    if (carouselTimer) {
+        clearInterval(carouselTimer);
+    }
+    setTimeout(() => {
+        nextParticle();
+        startCarouselTimer();
+    }, 1200);
+}
+
+function triggerQuarkPop(x, y) {
+    particleInteracted = true;
+    const dParticle = document.getElementById('dynamic-particle');
+    dParticle.classList.add('annihilated');
+    showFloatingScore('+10', false, x, y);
+    triggerShockwave(x, y, 'var(--color-cyan)', 90);
+    spawnSparks(x, y, 'var(--color-cyan)', 'var(--color-cyan-glow)');
+    advanceSlideOnSuccess();
+}
+
+function triggerMesonSlice(x, y) {
+    particleInteracted = true;
+    const dParticle = document.getElementById('dynamic-particle');
+    dParticle.classList.add('annihilated');
+    showFloatingScore('+20', false, x, y);
+    triggerShockwave(x, y, 'var(--color-magenta)', 100);
+    spawnSparks(x, y, 'var(--color-magenta)', 'var(--color-magenta-glow)');
+    advanceSlideOnSuccess();
+}
+
+function triggerEntangledTapSuccess() {
+    particleInteracted = true;
+    const dParticle = document.getElementById('dynamic-particle');
+    const dPartner = document.getElementById('dynamic-particle-partner');
+    const dLine = document.getElementById('dynamic-particle-line');
+    
+    dLine.style.opacity = '0';
+    dParticle.classList.add('annihilated');
+    dPartner.classList.add('annihilated');
+    
+    const c1 = getElementCenter(dParticle);
+    const c2 = getElementCenter(dPartner);
+    const midX = (c1.x + c2.x) / 2;
+    const midY = (c1.y + c2.y) / 2;
+    
+    showFloatingScore('+20', false, midX, midY);
+    triggerShockwave(midX, midY, 'var(--color-cyan)', 90);
+    spawnSparks(midX, midY, 'var(--color-cyan)', 'var(--color-cyan-glow)');
+    advanceSlideOnSuccess();
+}
+
+function triggerEntangledSliceSuccess(p1Center, p2Center) {
+    particleInteracted = true;
+    const dParticle = document.getElementById('dynamic-particle');
+    const dPartner = document.getElementById('dynamic-particle-partner');
+    const dLine = document.getElementById('dynamic-particle-line');
+    
+    dLine.style.opacity = '0';
+    dParticle.classList.add('annihilated');
+    dPartner.classList.add('annihilated');
+    
+    const midX = (p1Center.x + p2Center.x) / 2;
+    const midY = (p1Center.y + p2Center.y) / 2;
+    
+    showFloatingScore('+20', false, midX, midY);
+    triggerShockwave(midX, midY, 'var(--color-magenta)', 100);
+    spawnSparks(midX, midY, 'var(--color-magenta)', 'var(--color-magenta-glow)');
+    advanceSlideOnSuccess();
+}
+
+function triggerPenalty(x, y, scoreText) {
+    particleInteracted = true;
+    const card = document.querySelector('.particle-showcase-box');
+    card.classList.remove('shake-card');
+    void card.offsetWidth;
+    card.classList.add('shake-card');
+    
+    showFloatingScore(scoreText, true, x, y);
+    
+    setTimeout(() => {
+        card.classList.remove('shake-card');
+    }, 400);
+}
+
+function spawnSparks(x, y, color, shadowColor) {
+    const pView = document.querySelector('.particle-view');
+    for (let i = 0; i < 12; i++) {
+        const spark = document.createElement('div');
+        spark.className = 'particle-spark';
+        spark.style.left = `${x}px`;
+        spark.style.top = `${y}px`;
+        spark.style.backgroundColor = color;
+        spark.style.boxShadow = `0 0 8px ${shadowColor}`;
+        
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 40 + Math.random() * 40;
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+        
+        spark.style.setProperty('--tx', `${tx}px`);
+        spark.style.setProperty('--ty', `${ty}px`);
+        
+        pView.appendChild(spark);
+        
+        setTimeout(() => {
+            spark.remove();
+        }, 600);
+    }
+}
+
+function showFloatingScore(text, isChaos, x, y) {
+    const scoreEl = document.createElement('div');
+    scoreEl.className = 'floating-score ' + (isChaos ? 'chaos' : 'points');
+    scoreEl.textContent = text;
+    scoreEl.style.left = `${x - 15}px`;
+    scoreEl.style.top = `${y - 15}px`;
+    
+    const pView = document.querySelector('.particle-view');
+    pView.appendChild(scoreEl);
+    
+    setTimeout(() => {
+        scoreEl.remove();
+    }, 800);
+}
+
 // ===================== INIT =====================
 resizeCanvas();
 animateStars();
@@ -789,5 +1285,6 @@ setLanguage(initialLang);
 
 startQuinnSpeechLoop();
 startParticleLoop();
+initInteractiveParticles();
 updateParticleShowcase(false);
 startCarouselTimer();
