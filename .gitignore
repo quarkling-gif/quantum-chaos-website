@@ -1,0 +1,4 @@
+# Ignoruj czytelne pliki źródłowe (zabezpieczenie kodu przed wstawieniem na GitHub)
+script.dev.js
+style.dev.css
+build.py
