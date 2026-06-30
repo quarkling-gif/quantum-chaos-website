@@ -492,11 +492,21 @@ img {
 
 .particle-view {
     position: relative;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.particles-container {
+    position: absolute;
     width: 140px;
     height: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
+    pointer-events: none;
 }
 
 /* Baza dla cząstek */

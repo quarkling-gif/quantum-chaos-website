@@ -831,7 +831,6 @@ function initInteractiveParticles() {
     
     // Mouse Events
     pView.addEventListener('mousedown', (e) => {
-        if (particleInteracted) return;
         isDrawing = true;
         const rect = slashCanvasEl.getBoundingClientRect();
         startPos = {
@@ -845,7 +844,7 @@ function initInteractiveParticles() {
     });
     
     pView.addEventListener('mousemove', (e) => {
-        if (!isDrawing || particleInteracted) return;
+        if (!isDrawing) return;
         const rect = slashCanvasEl.getBoundingClientRect();
         currentPos = {
             x: e.clientX - rect.left,
@@ -878,7 +877,6 @@ function initInteractiveParticles() {
     
     // Touch Events (Mobile support with scroll prevention)
     pView.addEventListener('touchstart', (e) => {
-        if (particleInteracted) return;
         isDrawing = true;
         const rect = slashCanvasEl.getBoundingClientRect();
         startPos = {
@@ -893,7 +891,7 @@ function initInteractiveParticles() {
     }, { passive: false });
     
     pView.addEventListener('touchmove', (e) => {
-        if (!isDrawing || particleInteracted) return;
+        if (!isDrawing) return;
         const rect = slashCanvasEl.getBoundingClientRect();
         currentPos = {
             x: e.touches[0].clientX - rect.left,
@@ -992,9 +990,12 @@ function handleInteractionRelease(start, end) {
 }
 
 function getElementCenter(el) {
+    if (!slashCanvasEl) return { x: 0, y: 0 };
+    const elRect = el.getBoundingClientRect();
+    const canvasRect = slashCanvasEl.getBoundingClientRect();
     return {
-        x: el.offsetLeft + el.offsetWidth / 2,
-        y: el.offsetTop + el.offsetHeight / 2
+        x: (elRect.left - canvasRect.left) + elRect.width / 2,
+        y: (elRect.top - canvasRect.top) + elRect.height / 2
     };
 }
 
@@ -1044,6 +1045,7 @@ function getDistance(p1, p2) {
 }
 
 function checkReleaseSliceCollisions(start, end) {
+    if (particleInteracted) return;
     const data = particleData[currentLanguage][currentParticleIndex];
     const type = data.class;
     
@@ -1090,6 +1092,7 @@ function checkReleaseSliceCollisions(start, end) {
 }
 
 function handleReleaseTap(tapPos) {
+    if (particleInteracted) return;
     const data = particleData[currentLanguage][currentParticleIndex];
     const type = data.class;
     const dParticle = document.getElementById('dynamic-particle');
