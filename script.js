@@ -1233,7 +1233,8 @@ function triggerPenalty(x, y, scoreText) {
     void card.offsetWidth;
     card.classList.add('shake-card');
     
-    showFloatingScore(scoreText, true, x, y);
+    const penaltyLabel = currentLanguage === 'pl' ? 'Błąd' : 'Error';
+    showFloatingScore(`${penaltyLabel} ${scoreText}`, true, x, y);
     
     // Annihilate particle elements and line on penalty (1:1 with game collapse)
     const dParticle = document.getElementById('dynamic-particle');
@@ -1279,18 +1280,24 @@ function spawnSparks(x, y, color, shadowColor) {
 }
 
 function showFloatingScore(text, isChaos, x, y) {
+    if (!slashCanvasEl) return;
     const scoreEl = document.createElement('div');
     scoreEl.className = 'floating-score ' + (isChaos ? 'chaos' : 'points');
     scoreEl.textContent = text;
-    scoreEl.style.left = `${x - 15}px`;
-    scoreEl.style.top = `${y - 15}px`;
     
-    const pView = document.querySelector('.particle-view');
-    pView.appendChild(scoreEl);
+    // Calculate page-relative absolute coordinates to prevent card overflow clipping
+    const rect = slashCanvasEl.getBoundingClientRect();
+    const absX = rect.left + window.scrollX + x;
+    const absY = rect.top + window.scrollY + y;
+    
+    scoreEl.style.left = `${absX}px`;
+    scoreEl.style.top = `${absY}px`;
+    
+    document.body.appendChild(scoreEl);
     
     setTimeout(() => {
         scoreEl.remove();
-    }, 800);
+    }, 1600);
 }
 
 // ===================== INIT =====================
