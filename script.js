@@ -36,7 +36,10 @@ const translations = {
         footer_privacy: "Polityka Prywatności",
         footer_contact: "Kontakt",
         footer_contact_label: "Kontakt",
-        footer_rights: "Wszelkie prawa zastrzeżone."
+        footer_rights: "Wszelkie prawa zastrzeżone.",
+        meta_title: "Quantum Chaos — Gra Mobilna",
+        meta_desc: "Quantum Chaos — zręcznościowa gra mobilna osadzona w mrocznym kwantowym uniwersum. Zagraj w demo w przeglądarce.",
+        quinn_shield_back: "Wystarczy. Aktywuję protokoły izolacji awatara. Koniec żartów."
     },
     en: {
         nav_demo: "Play Demo",
@@ -74,7 +77,10 @@ const translations = {
         footer_privacy: "Privacy Policy",
         footer_contact: "Contact",
         footer_contact_label: "Contact",
-        footer_rights: "All rights reserved."
+        footer_rights: "All rights reserved.",
+        meta_title: "Quantum Chaos — Mobile Game",
+        meta_desc: "Quantum Chaos — an arcade mobile game set in a dark quantum universe. Play the demo in your browser.",
+        quinn_shield_back: "Enough. Activating avatar isolation protocols. No more jokes."
     }
 };
 
@@ -112,6 +118,13 @@ function setLanguage(lang) {
     });
 
     document.documentElement.setAttribute('lang', lang);
+    
+    // Update document title and meta description dynamically
+    document.title = translations[lang].meta_title || document.title;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc && translations[lang].meta_desc) {
+        metaDesc.setAttribute('content', translations[lang].meta_desc);
+    }
     
     // Refresh active particle description immediately on language change
     updateParticleShowcase(false);
@@ -161,6 +174,8 @@ const quinnBubble = document.getElementById('quinn-bubble');
 let quinnClicks = 0;
 let isQuinnHiding = false;
 let quinnSpeechTimer = null;
+let quinnAngerCount = 0;
+let isQuinnShielded = false;
 
 // Speech Dictionaries
 const quinnSpeeches = {
@@ -227,6 +242,7 @@ function startQuinnSpeechLoop() {
 }
 
 quinnCharacter.addEventListener('click', () => {
+    if (isQuinnShielded) return;
     if (isQuinnHiding) return;
     
     quinnClicks++;
@@ -271,9 +287,17 @@ quinnCharacter.addEventListener('click', () => {
             
             isQuinnHiding = false;
             quinnClicks = 0;
+            quinnAngerCount++;
             
             quinnBubble.style.opacity = '1';
-            quinnBubbleText.textContent = quinnSpeeches[currentLanguage].back;
+            
+            if (quinnAngerCount === 3) {
+                isQuinnShielded = true;
+                quinnCharacter.classList.add('shielded');
+                quinnBubbleText.textContent = translations[currentLanguage].quinn_shield_back;
+            } else {
+                quinnBubbleText.textContent = quinnSpeeches[currentLanguage].back;
+            }
             
             // Reset transition property
             setTimeout(() => {
@@ -713,6 +737,13 @@ if (newsletterForm) {
         });
     });
 }
+
+// Prevent image dragging globally
+document.addEventListener('dragstart', (e) => {
+    if (e.target.tagName === 'IMG') {
+        e.preventDefault();
+    }
+});
 
 // ===================== INIT =====================
 resizeCanvas();

@@ -34,6 +34,16 @@ body {
     line-height: 1.6;
 }
 
+/* Image selection and drag protection */
+img {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+}
+.quinn-character img, .screenshot-item img {
+    pointer-events: none;
+}
+
 /* ===================== STARRY CANVAS ===================== */
 #starsCanvas {
     position: fixed;
@@ -277,6 +287,11 @@ body {
     object-fit: contain;
     z-index: 3;
     filter: url(#color-cyan-filter) drop-shadow(0 0 35px rgba(0, 236, 246, 0.7));
+}
+
+/* Quinn Shielded state (Gold Core) */
+.quinn-character.shielded .quinn-body {
+    filter: url(#color-gold-filter) drop-shadow(0 0 35px rgba(255, 217, 51, 0.7));
 }
 
 @keyframes quinnBreathe {
