@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Polityka Prywatności / Privacy Policy - Quantum Chaos</title>
+    <title>Polityka Prywatności — Quantum Chaos</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@700;900&family=Rajdhani:wght@700&display=swap" rel="stylesheet">
     <style>
@@ -233,8 +233,8 @@
     <div class="container">
         <header>
             <img src="Assets/QuantumTitle.png" alt="Quantum Chaos Logo" class="logo-img">
-            <h1>Polityka Prywatności / Privacy Policy</h1>
-            <div class="subtitle">Zgodność z RODO / GDPR Compliance</div>
+            <h1 id="privacy-title">Polityka Prywatności</h1>
+            <div class="subtitle" id="privacy-subtitle">Zgodność z RODO</div>
         </header>
 
         <div class="lang-switch-container">
@@ -273,6 +273,7 @@
                     <li>Wglądu do swoich danych oraz żądania ich sprostowania.</li>
                     <li>Żądania <span class="highlight">całkowitego usunięcia danych</span> („prawo do bycia zapomnianym”) w dowolnym momencie.</li>
                     <li>Wycofania zgody na przetwarzanie danych bez wpływu na zgodność z prawem przetwarzania przed jej wycofaniem.</li>
+                    <li>Wniesienia skargi do organu nadzorczego (np. Prezesa Urzędu Ochrony Danych Osobowych w Polsce), jeśli uznasz, że przetwarzanie narusza przepisy prawa.</li>
                 </ul>
                 <p>Aby skorzystać ze swoich praw, wyślij wiadomość e-mail na adres: <span class="highlight">hello.quarkling@gmail.com</span>. Twoje dane zostaną niezwłocznie usunięte.</p>
 
@@ -308,6 +309,7 @@
                     <li>Access your data and request rectification.</li>
                     <li>Request the <span class="highlight">complete erasure of your data</span> ("right to be forgotten") at any time.</li>
                     <li>Withdraw your consent at any time, without affecting the lawfulness of processing based on consent before its withdrawal.</li>
+                    <li>Lodge a complaint with a supervisory authority (e.g., the President of the Personal Data Protection Office in Poland) if you consider that the processing infringes the law.</li>
                 </ul>
                 <p>To exercise your rights, please send an email to: <span class="highlight">hello.quarkling@gmail.com</span>. Your data will be deleted immediately.</p>
 
@@ -317,7 +319,7 @@
         </main>
 
         <div class="footer-back">
-            <a href="index.html" class="btn btn-back">Powrót / Back</a>
+            <a href="index.html" class="btn btn-back" id="btn-back">Powrót</a>
         </div>
     </div>
 
@@ -334,6 +336,19 @@
             if (activeBtn) activeBtn.classList.add('active');
             localStorage.setItem('preferredLanguage', lang);
             document.documentElement.lang = lang;
+
+            // Dynamically translate title, header, subtitle, and back button
+            if (lang === 'pl') {
+                document.title = "Polityka Prywatności — Quantum Chaos";
+                document.getElementById('privacy-title').textContent = "Polityka Prywatności";
+                document.getElementById('privacy-subtitle').textContent = "Zgodność z RODO";
+                document.getElementById('btn-back').textContent = "Powrót";
+            } else {
+                document.title = "Privacy Policy — Quantum Chaos";
+                document.getElementById('privacy-title').textContent = "Privacy Policy";
+                document.getElementById('privacy-subtitle').textContent = "GDPR Compliance";
+                document.getElementById('btn-back').textContent = "Back";
+            }
         }
 
         // Init language based on localStorage or browser preference
