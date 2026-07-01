@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=1.0.3">
 </head>
 <body>
     <canvas id="starsCanvas"></canvas>
@@ -23,6 +23,7 @@
                 <img src="Assets/QuantumTitle.png" alt="Quantum Chaos Logo" class="nav-logo">
             </a>
             <nav class="main-nav">
+                <a href="#" data-i18n="nav_about">Gra</a>
                 <a href="#mechanics" data-i18n="nav_mechanics">Mechaniki</a>
                 <a href="#screenshots" data-i18n="nav_screenshots">Galeria</a>
                 <a href="#demo" data-i18n="nav_demo">Zagraj w Demo</a>
@@ -43,6 +44,7 @@
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" id="mobile-menu-overlay">
         <nav class="mobile-nav">
+            <a href="#" data-i18n="nav_about" class="mobile-nav-link">Gra</a>
             <a href="#mechanics" data-i18n="nav_mechanics" class="mobile-nav-link">Mechaniki</a>
             <a href="#screenshots" data-i18n="nav_screenshots" class="mobile-nav-link">Galeria</a>
             <a href="#demo" data-i18n="nav_demo" class="mobile-nav-link">Zagraj w Demo</a>
@@ -60,7 +62,7 @@
             <div class="hero-logo-centered">
                 <img src="Assets/QuantumTitle.png" alt="Quantum Chaos Logo" class="hero-logo">
             </div>
-            <div class="hero-container-split">
+            <div class="hero-container-split" id="game-intro">
                 <!-- Left Side: Texts & CTAs -->
                 <div class="hero-text-side">
                     <h1 class="hero-tagline" data-i18n="hero_tagline">Stuknij. Przetnij. Przetrwaj kwantową burzę.</h1>
@@ -89,13 +91,13 @@
             </div>
             
             <!-- Scroll Indicator -->
-            <div class="scroll-indicator" id="scroll-indicator">
+            <a href="#mechanics" class="scroll-indicator" id="scroll-indicator">
                 <span class="scroll-text" data-i18n="scroll_indicator_text">Przewiń w dół</span>
                 <div class="scroll-arrow">
                     <span></span>
                     <span></span>
                 </div>
-            </div>
+            </a>
         </section>
 
         <!-- ==================== MECHANICS SECTION ==================== -->
@@ -358,6 +360,6 @@
         </defs>
     </svg>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=1.0.3"></script>
 </body>
 </html>
