@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quantum Chaos — Gra Mobilna</title>
-    <meta name="description" content="Quantum Chaos — zręcznościowa gra mobilna osadzona w mrocznym kwantowym uniwersum. Zagraj w demo w przeglądarce.">
+    <meta name="description"
+        content="Quantum Chaos — zręcznościowa gra mobilna osadzona w mrocznym kwantowym uniwersum. Zagraj w demo w przeglądarce.">
     <link rel="icon" type="image/png" href="Assets/Icon_192x192.png">
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;700&display=swap"
+        rel="stylesheet">
+
     <link rel="stylesheet" href="style.css?v=1.0.3">
 </head>
+
 <body>
     <canvas id="starsCanvas"></canvas>
 
@@ -66,7 +71,9 @@
                 <!-- Left Side: Texts & CTAs -->
                 <div class="hero-text-side">
                     <h1 class="hero-tagline" data-i18n="hero_tagline">Stuknij. Przetnij. Przetrwaj kwantową burzę.</h1>
-                    <p class="hero-description" data-i18n="hero_desc">Rzeczywistość jest niestabilna. Coś czai się za kwantową zasłoną. Opanuj cząstki, zmierz się z anomaliami i odkryj prawdę. O ile odważysz się jej szukać.</p>
+                    <p class="hero-description" data-i18n="hero_desc">Rzeczywistość jest niestabilna. Coś czai się za
+                        kwantową zasłoną. Opanuj cząstki, zmierz się z anomaliami i odkryj prawdę. O ile odważysz się
+                        jej szukać.</p>
                     <div class="hero-cta-container">
                         <a href="#demo" class="btn btn-primary" data-i18n="cta_play">Zagraj w Demo</a>
                         <a href="#community" class="btn btn-secondary" data-i18n="cta_discord">Dołącz na Discord</a>
@@ -89,7 +96,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Scroll Indicator -->
             <a href="#mechanics" class="scroll-indicator" id="scroll-indicator">
                 <span class="scroll-text" data-i18n="scroll_indicator_text">Przewiń w dół</span>
@@ -115,8 +122,10 @@
                                 </div>
                                 <div class="particle-view">
                                     <div class="particles-container">
-                                        <div class="particle-line" id="dynamic-particle-line" style="display: none;"></div>
-                                        <div class="particle-visual-element partner" id="dynamic-particle-partner" style="display: none;"></div>
+                                        <div class="particle-line" id="dynamic-particle-line" style="display: none;">
+                                        </div>
+                                        <div class="particle-visual-element partner" id="dynamic-particle-partner"
+                                            style="display: none;"></div>
                                         <div class="particle-visual-element" id="dynamic-particle"></div>
                                     </div>
                                     <canvas id="slash-canvas"></canvas>
@@ -125,7 +134,8 @@
                             </div>
                         </div>
                         <h3 data-i18n="mech1_title">Stukaj i Tnij</h3>
-                        <p class="card-desc" id="particle-desc-text" data-i18n="mech1_desc">Stukaj w cyjanowe cząstki, przecinaj magentowe mezony, unikaj antymaterii.</p>
+                        <p class="card-desc" id="particle-desc-text" data-i18n="mech1_desc">Stukaj w cyjanowe cząstki,
+                            przecinaj magentowe mezony, unikaj antymaterii.</p>
                     </div>
 
                     <!-- Card 2: Kwanciaki -->
@@ -133,11 +143,13 @@
                         <div class="card-glow magenta"></div>
                         <div class="card-visual">
                             <div class="kwantak-bounce-wrapper">
-                                <img src="Assets/Shrondi_front_256.png" alt="Kwanciak Schrondi" class="card-screenshot" id="interactive-kwantak-img">
+                                <img src="Assets/Shrondi_front_256.png" alt="Kwanciak Schrondi" class="card-screenshot"
+                                    id="interactive-kwantak-img">
                             </div>
                         </div>
                         <h3 data-i18n="mech2_title">Kwanciaki</h3>
-                        <p class="card-desc" data-i18n="mech2_desc">Twoi kwantowi towarzysze. Ulepszaj ich i korzystaj z ich wsparcia podczas rozgrywki.</p>
+                        <p class="card-desc" data-i18n="mech2_desc">Twoi kwantowi towarzysze. Ulepszaj ich i korzystaj z
+                            ich wsparcia podczas rozgrywki.</p>
                     </div>
 
                     <!-- Card 3: Rdzenie -->
@@ -145,43 +157,45 @@
                         <div class="card-glow gold"></div>
                         <div class="card-visual">
                             <div class="core-float-wrapper">
-                                <img src="Assets/Core_Standard/QuantumCore_Standard_With_Eyes.png" alt="Rdzeń Kwantowy" class="card-screenshot" id="interactive-core-img">
+                                <img src="Assets/Core_Standard/QuantumCore_Standard_With_Eyes.png" alt="Rdzeń Kwantowy"
+                                    class="card-screenshot" id="interactive-core-img">
                             </div>
                         </div>
                         <h3 data-i18n="mech3_title">Rdzenie Kwantowe</h3>
-                        <p class="card-desc" data-i18n="mech3_desc">Rozbijaj tajemnicze rdzenie i dekoduj rzadkie nagrody.</p>
+                        <p class="card-desc" data-i18n="mech3_desc">Rozbijaj tajemnicze rdzenie i dekoduj rzadkie
+                            nagrody.</p>
                     </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ==================== SCREENSHOTS SECTION ==================== -->
-            <section id="screenshots" class="screenshots-section reveal-section">
-                <div class="section-container">
-                    <h2 class="section-title reveal-item" data-i18n="screenshots_title">Galeria</h2>
-                    <div class="carousel-container-outer reveal-item">
-                        <button class="carousel-control prev" onclick="moveCarousel(-1)">&#10094;</button>
-                        <div class="screenshot-carousel">
-                            <div class="carousel-track" id="carousel-track">
-                                <!-- Generowane dynamicznie przez JS -->
-                            </div>
-                        </div>
-                        <button class="carousel-control next" onclick="moveCarousel(1)">&#10095;</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Lightbox Modal -->
-            <div id="screenshot-lightbox" class="lightbox-modal" onclick="closeLightbox()">
-                <span class="lightbox-close">&times;</span>
-                <div class="lightbox-content-wrapper" onclick="event.stopPropagation()">
-                    <button class="lightbox-prev" onclick="prevLightboxImage()">&#10094;</button>
-                    <img id="lightbox-img" class="lightbox-img" src="" alt="Lightbox View">
-                    <button class="lightbox-next" onclick="nextLightboxImage()">&#10095;</button>
                 </div>
             </div>
+        </section>
 
-            <!-- ==================== DEMO SECTION ==================== -->
+        <!-- ==================== SCREENSHOTS SECTION ==================== -->
+        <section id="screenshots" class="screenshots-section reveal-section">
+            <div class="section-container">
+                <h2 class="section-title reveal-item" data-i18n="screenshots_title">Galeria</h2>
+                <div class="carousel-container-outer reveal-item">
+                    <button class="carousel-control prev" onclick="moveCarousel(-1)">&#10094;</button>
+                    <div class="screenshot-carousel">
+                        <div class="carousel-track" id="carousel-track">
+                            <!-- Generowane dynamicznie przez JS -->
+                        </div>
+                    </div>
+                    <button class="carousel-control next" onclick="moveCarousel(1)">&#10095;</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lightbox Modal -->
+        <div id="screenshot-lightbox" class="lightbox-modal" onclick="closeLightbox()">
+            <span class="lightbox-close">&times;</span>
+            <div class="lightbox-content-wrapper" onclick="event.stopPropagation()">
+                <button class="lightbox-prev" onclick="prevLightboxImage()">&#10094;</button>
+                <img id="lightbox-img" class="lightbox-img" src="" alt="Lightbox View">
+                <button class="lightbox-next" onclick="nextLightboxImage()">&#10095;</button>
+            </div>
+        </div>
+
+        <!-- ==================== DEMO SECTION ==================== -->
         <section id="demo" class="demo-section reveal-section">
             <div class="section-container">
                 <h2 class="section-title reveal-item" data-i18n="demo_title">Interaktywne Demo</h2>
@@ -190,13 +204,21 @@
                         <div class="godot-placeholder">
                             <div class="placeholder-content">
                                 <h3 data-i18n="placeholder_title">Demo wkrótce</h3>
-                                <p data-i18n="placeholder_desc">Tutaj pojawi się grywalna wersja demo prosto z silnika Godot. Śledź nasz Discord, aby nie przegapić premiery!</p>
-                                <button id="launch-demo-btn" class="btn btn-primary" data-i18n="placeholder_btn" style="margin-top: 1.5rem;">Wczytaj Demo</button>
+                                <p data-i18n="placeholder_desc">Tutaj pojawi się grywalna wersja demo prosto z silnika
+                                    Godot. Śledź nasz Discord, aby nie przegapić premiery!</p>
+                                <button id="launch-demo-btn" class="btn btn-primary" data-i18n="placeholder_btn"
+                                    style="margin-top: 1.5rem;">Wczytaj Demo</button>
                             </div>
                         </div>
-                        <iframe id="game-iframe" src="" frameborder="0" allowfullscreen style="display: none; width: 100%; height: 100%;"></iframe>
+                        <iframe id="game-iframe" src="" frameborder="0" allowfullscreen
+                            style="display: none; width: 100%; height: 100%;"></iframe>
                         <button id="fullscreen-btn" class="fullscreen-btn" style="display: none;" title="Pełny ekran">
-                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3">
+                                </path>
+                            </svg>
                         </button>
                     </div>
                 </div>
@@ -209,8 +231,9 @@
             <div class="section-container">
                 <div class="community-box reveal-item">
                     <h2 data-i18n="comm_title">Dołącz do Społeczności</h2>
-                    <p data-i18n="comm_desc">Bądź na bieżąco z rozwojem, zgłaszaj pomysły i rywalizuj z innymi Obserwatorami!</p>
-                    
+                    <p data-i18n="comm_desc">Bądź na bieżąco z rozwojem, zgłaszaj pomysły i rywalizuj z innymi
+                        Obserwatorami!</p>
+
                     <div class="community-layout">
                         <!-- Discord Column -->
                         <div class="community-column discord-column">
@@ -221,40 +244,49 @@
                                         <span class="benefit-icon">📢</span>
                                         <div class="benefit-content">
                                             <strong data-i18n="discord_benefit1_title">Informacje o premierze</strong>
-                                            <p data-i18n="discord_benefit1_desc">Otrzymaj powiadomienie na `#announcements` dokładnie w momencie, gdy wersja na Androida trafi do Google Play!</p>
+                                            <p data-i18n="discord_benefit1_desc">Otrzymaj powiadomienie na
+                                                `#announcements` dokładnie w momencie, gdy wersja na Androida trafi do
+                                                Google Play!</p>
                                         </div>
                                     </li>
                                     <li>
                                         <span class="benefit-icon">⚖️</span>
                                         <div class="benefit-content">
                                             <strong data-i18n="discord_benefit2_title">Współtworzenie balansu</strong>
-                                            <p data-i18n="discord_benefit2_desc">Graj w demo i pomóż mi dopracować balans rozgrywki przed premierą w kanale `#feedback`.</p>
+                                            <p data-i18n="discord_benefit2_desc">Graj w demo i pomóż mi dopracować
+                                                balans rozgrywki przed premierą w kanale `#feedback`.</p>
                                         </div>
                                     </li>
                                     <li>
                                         <span class="benefit-icon">🏆</span>
                                         <div class="benefit-content">
                                             <strong data-i18n="discord_benefit3_title">Kwantowa rywalizacja</strong>
-                                            <p data-i18n="discord_benefit3_desc">Wrzucaj zrzuty ekranu ze swoimi rekordami na `#media` i rywalizuj z innymi Obserwatorami.</p>
+                                            <p data-i18n="discord_benefit3_desc">Wrzucaj zrzuty ekranu ze swoimi
+                                                rekordami na `#media` i rywalizuj z innymi Obserwatorami.</p>
                                         </div>
                                     </li>
                                 </ul>
                             </div>
-                            
+
                             <!-- Right Side: CTA Button -->
                             <div class="discord-cta-side">
-                                <img src="Assets/Icon_432x432.png" alt="Quantum Chaos Logo" class="discord-game-icon" width="120" height="120">
+                                <img src="Assets/Icon_432x432.png" alt="Quantum Chaos Logo" class="discord-game-icon"
+                                    width="120" height="120">
                                 <h3 data-i18n="discord_heading">Serwer Discord</h3>
-                                <p class="discord-cta-text" data-i18n="discord_cta_subtext">Wejdź do gry i dołącz do naszej społeczności!</p>
-                                <a href="https://discord.gg/u4ZUQzcpVF" target="_blank" class="btn btn-discord btn-pulse">
-                                    <svg class="discord-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.14 96.36">
-                                        <path fill="currentColor" d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.44,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36a77.7,77.7,0,0,0,6.63-10.85,68.43,68.43,0,0,1-10.4-5c.87-.64,1.71-1.32,2.51-2a75.7,75.7,0,0,0,72.82,0c.8.71,1.64,1.39,2.51,2a68.21,68.21,0,0,1-10.4,5A77.7,77.7,0,0,0,95.14,96.36a105.73,105.73,0,0,0,31-18.83C130,50.22,123.81,27.42,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.83,46,53.83,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.07,46,96.07,53,91,65.69,84.69,65.69Z"/>
+                                <p class="discord-cta-text" data-i18n="discord_cta_subtext">Wejdź do gry i dołącz do
+                                    naszej społeczności!</p>
+                                <a href="https://discord.gg/F5vDST5FNp" target="_blank"
+                                    class="btn btn-discord btn-pulse">
+                                    <svg class="discord-svg" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 127.14 96.36">
+                                        <path fill="currentColor"
+                                            d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.44,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36a77.7,77.7,0,0,0,6.63-10.85,68.43,68.43,0,0,1-10.4-5c.87-.64,1.71-1.32,2.51-2a75.7,75.7,0,0,0,72.82,0c.8.71,1.64,1.39,2.51,2a68.21,68.21,0,0,1-10.4,5A77.7,77.7,0,0,0,95.14,96.36a105.73,105.73,0,0,0,31-18.83C130,50.22,123.81,27.42,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.83,46,53.83,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.07,46,96.07,53,91,65.69,84.69,65.69Z" />
                                     </svg>
                                     Discord Server
                                 </a>
                             </div>
                         </div>
-                        
+
                         <!-- Newsletter Column (Commented out because we are disabling the newsletter for now)
                         <div class="community-column newsletter-column">
                             <h3 data-i18n="newsletter_heading">Kwantowy Biuletyn</h3>
@@ -288,7 +320,8 @@
                 <p class="footer-sub" data-i18n="footer_dev">Gra w aktywnym rozwoju</p>
             </div>
             <div class="footer-right">
-                <a href="#" id="footer-contact-link"><span data-i18n="footer_contact_label">Kontakt</span>: hello.quarkling@gmail.com</a>
+                <a href="#" id="footer-contact-link"><span data-i18n="footer_contact_label">Kontakt</span>:
+                    hello.quarkling@gmail.com</a>
                 <!-- <a href="privacy.html" data-i18n="footer_privacy" id="footer-privacy-link">Polityka Prywatności</a> (Commented out because the newsletter is disabled) -->
             </div>
         </div>
@@ -329,4 +362,5 @@
 
     <script src="script.js?v=1.0.3"></script>
 </body>
+
 </html>
