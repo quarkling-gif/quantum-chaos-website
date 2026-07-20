@@ -16,6 +16,30 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="style.css?v=1.0.3">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Quantum Chaos",
+      "description": "An arcade sci-fi mobile game set in a dark quantum universe. Master the particles, face the anomalies, and survive the quantum storm.",
+      "author": {
+        "@type": "Person",
+        "name": "Bartek"
+      },
+      "genre": ["Arcade", "Action", "Sci-Fi"],
+      "gamePlatform": ["Android", "Web Browser"],
+      "applicationCategory": "Game",
+      "operatingSystem": "Android",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      },
+      "keywords": "arcade, action, quantum, sci-fi, mobile game, tap and slice"
+    }
+    </script>
 </head>
 
 <body>
@@ -143,7 +167,7 @@
                         <div class="card-glow magenta"></div>
                         <div class="card-visual">
                             <div class="kwantak-bounce-wrapper">
-                                <img src="Assets/Shrondi_front_256.png" alt="Kwanciak Schrondi" class="card-screenshot"
+                                <img src="Assets/Shrondi_front_256.png" alt="Quantax Schrondi companion" class="card-screenshot"
                                     id="interactive-kwantak-img">
                             </div>
                         </div>
@@ -157,7 +181,7 @@
                         <div class="card-glow gold"></div>
                         <div class="card-visual">
                             <div class="core-float-wrapper">
-                                <img src="Assets/Core_Standard/QuantumCore_Standard_With_Eyes.png" alt="Rdzeń Kwantowy"
+                                <img src="Assets/Core_Standard/QuantumCore_Standard_With_Eyes.png" alt="Quantum Core"
                                     class="card-screenshot" id="interactive-core-img">
                             </div>
                         </div>
@@ -219,7 +243,7 @@
                                     style="margin-top: 1.5rem;">Load Demo</button>
                             </div>
                         </div>
-                        <iframe id="game-iframe" src="" frameborder="0" allowfullscreen
+                        <iframe id="game-iframe" src="" frameborder="0" allowfullscreen title="Quantum Chaos Interactive WebGL Demo"
                             style="display: none; width: 100%; height: 100%;"></iframe>
                         <button id="fullscreen-btn" class="fullscreen-btn" style="display: none;" title="Pełny ekran">
                             <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
